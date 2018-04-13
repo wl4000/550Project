@@ -1,0 +1,134 @@
+﻿Country Name,Country Code,Series Name,Series Code,2016 [YR2016]
+Germany,DEU,GDP (constant 2010 US$),NY.GDP.MKTP.KD,3781698549834.74
+Germany,DEU,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,45845.5265423811
+Germany,DEU,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,4.09999990463257
+Germany,DEU,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,1.329210698624
+Brazil,BRA,GDP (constant 2010 US$),NY.GDP.MKTP.KD,2248106280710.07
+Brazil,BRA,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,10826.2714348298
+Brazil,BRA,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,11.6000003814697
+Brazil,BRA,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,8.33256679010704
+Spain,ESP,GDP (constant 2010 US$),NY.GDP.MKTP.KD,1464508831011.81
+Spain,ESP,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,31505.2929758767
+Spain,ESP,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,19.6000003814697
+Spain,ESP,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,0.283304212129877
+Argentina,ARG,GDP (constant 2010 US$),NY.GDP.MKTP.KD,445226712654.891
+Argentina,ARG,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,10153.9979117337
+Argentina,ARG,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,..
+Argentina,ARG,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,40.6753096494524
+France,FRA,GDP (constant 2010 US$),NY.GDP.MKTP.KD,2810525379194.34
+France,FRA,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,42015.7382940858
+France,FRA,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,10.1000003814697
+France,FRA,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,0.38526565465024
+Portugal,PRT,GDP (constant 2010 US$),NY.GDP.MKTP.KD,231561559532.622
+Portugal,PRT,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,22426.2879274072
+Portugal,PRT,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,11.1000003814697
+Portugal,PRT,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,1.42589299973585
+United Kingdom,GBR,GDP (constant 2010 US$),NY.GDP.MKTP.KD,2753793133582.5
+United Kingdom,GBR,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,41981.3920892747
+United Kingdom,GBR,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,4.80000019073486
+United Kingdom,GBR,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,2.00236447669423
+Colombia,COL,GDP (constant 2010 US$),NY.GDP.MKTP.KD,366158592495.197
+Colombia,COL,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,7525.85532571096
+Colombia,COL,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,8.39999961853027
+Colombia,COL,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,5.85243195842476
+Belgium,BEL,GDP (constant 2010 US$),NY.GDP.MKTP.KD,515557225002.467
+Belgium,BEL,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,45469.7108326081
+Belgium,BEL,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,7.80000019073486
+Belgium,BEL,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,1.58390325573154
+Peru,PER,GDP (constant 2010 US$),NY.GDP.MKTP.KD,193483725407.038
+Peru,PER,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,6089.40346827584
+Peru,PER,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,6.59999990463257
+Peru,PER,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,3.64246308356282
+Uruguay,URY,GDP (constant 2010 US$),NY.GDP.MKTP.KD,48250518688.4947
+Uruguay,URY,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,14009.9984403322
+Uruguay,URY,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,7.80000019073486
+Uruguay,URY,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,7.04851239712634
+Switzerland,CHE,GDP (constant 2010 US$),NY.GDP.MKTP.KD,642089703646.215
+Switzerland,CHE,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,76691.1168436405
+Switzerland,CHE,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,4.90000009536743
+Switzerland,CHE,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,-0.566143534099083
+Mexico,MEX,GDP (constant 2010 US$),NY.GDP.MKTP.KD,1238150693413.41
+Mexico,MEX,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,9707.90800508327
+Mexico,MEX,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,3.90000009536743
+Mexico,MEX,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,4.60958260195012
+Croatia,HRV,GDP (constant 2010 US$),NY.GDP.MKTP.KD,60328288795.9258
+Croatia,HRV,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,14452.1430277933
+Croatia,HRV,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,13.1000003814697
+Croatia,HRV,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,-0.104514875391416
+Denmark,DNK,GDP (constant 2010 US$),NY.GDP.MKTP.KD,347519725465.965
+Denmark,DNK,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,60670.2372143145
+Denmark,DNK,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,6.19999980926514
+Denmark,DNK,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,-0.0464441635455159
+Poland,POL,GDP (constant 2010 US$),NY.GDP.MKTP.KD,572056239015.817
+Poland,POL,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,15065.9712477303
+Poland,POL,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,6.19999980926514
+Poland,POL,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,0.416249586969514
+Sweden,SWE,GDP (constant 2010 US$),NY.GDP.MKTP.KD,560386605247.826
+Sweden,SWE,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,56473.022779491
+Sweden,SWE,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,7
+Sweden,SWE,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,1.59325140634409
+"Iran, Islamic Rep.",IRN,GDP (constant 2010 US$),NY.GDP.MKTP.KD,540581254038.18
+"Iran, Islamic Rep.",IRN,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,6733.9134736377
+"Iran, Islamic Rep.",IRN,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,12.3999996185303
+"Iran, Islamic Rep.",IRN,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,1.60718948786945
+Iceland,ISL,GDP (constant 2010 US$),NY.GDP.MKTP.KD,16249289009.3572
+Iceland,ISL,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,48441.8597997166
+Iceland,ISL,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,3
+Iceland,ISL,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,2.04196051218798
+Serbia,SRB,GDP (constant 2010 US$),NY.GDP.MKTP.KD,41308012849.7895
+Serbia,SRB,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,5852.38429895795
+Serbia,SRB,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,15.3000001907349
+Serbia,SRB,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,2.53455485585154
+Senegal,SEN,GDP (constant 2010 US$),NY.GDP.MKTP.KD,16833353304.076
+Senegal,SEN,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,1092.25116227774
+Senegal,SEN,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,..
+Senegal,SEN,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,1.11350543212474
+"Korea, Rep.",KOR,GDP (constant 2010 US$),NY.GDP.MKTP.KD,1304658664205.44
+"Korea, Rep.",KOR,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,25458.8870089242
+"Korea, Rep.",KOR,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,3.70000004768372
+"Korea, Rep.",KOR,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,1.80730348847811
+Costa Rica,CRI,GDP (constant 2010 US$),NY.GDP.MKTP.KD,47184044862.6725
+Costa Rica,CRI,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,9714.09989691182
+Costa Rica,CRI,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,9
+Costa Rica,CRI,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,2.29764777592536
+Australia,AUS,GDP (constant 2010 US$),NY.GDP.MKTP.KD,1343181238465.26
+Australia,AUS,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,55478.5772943505
+Australia,AUS,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,5.69999980926514
+Australia,AUS,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,-0.41372321405467
+Morocco,MAR,GDP (constant 2010 US$),NY.GDP.MKTP.KD,114783961362.676
+Morocco,MAR,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,3204.86465254499
+Morocco,MAR,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,9.39999961853027
+Morocco,MAR,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,1.60184142275439
+Nigeria,NGA,GDP (constant 2010 US$),NY.GDP.MKTP.KD,456775408619.476
+Nigeria,NGA,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,2455.91855879433
+Nigeria,NGA,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,7.09999990463257
+Nigeria,NGA,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,9.54367007038431
+Japan,JPN,GDP (constant 2010 US$),NY.GDP.MKTP.KD,6047894004051.61
+Japan,JPN,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,47623.2709305964
+Japan,JPN,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,3.09999990463257
+Japan,JPN,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,0.267867384755462
+Russian Federation,RUS,GDP (constant 2010 US$),NY.GDP.MKTP.KD,1654433869549.9
+Russian Federation,RUS,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,11279.6253410461
+Russian Federation,RUS,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,..
+Russian Federation,RUS,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,3.6103493778149
+Panama,PAN,GDP (constant 2010 US$),NY.GDP.MKTP.KD,44304199791.0644
+Panama,PAN,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,10982.3730512324
+Panama,PAN,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,4.40000009536743
+Panama,PAN,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,0.9333116355632
+Tunisia,TUN,GDP (constant 2010 US$),NY.GDP.MKTP.KD,48639094592.7065
+Tunisia,TUN,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,4265.37198811308
+Tunisia,TUN,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,15.5
+Tunisia,TUN,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,5.49219760058901
+"Egypt, Arab Rep.",EGY,GDP (constant 2010 US$),NY.GDP.MKTP.KD,260693936973.86
+"Egypt, Arab Rep.",EGY,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,2724.39680691031
+"Egypt, Arab Rep.",EGY,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,12.3999996185303
+"Egypt, Arab Rep.",EGY,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,6.25238317807792
+Saudi Arabia,SAU,GDP (constant 2010 US$),NY.GDP.MKTP.KD,690549935520
+Saudi Arabia,SAU,GDP per capita (constant 2010 US$),NY.GDP.PCAP.KD,21395.3597802581
+Saudi Arabia,SAU,"Unemployment, total (% of total labor force) (national estimate)",SL.UEM.TOTL.NE.ZS,5.59999990463257
+Saudi Arabia,SAU,"Inflation, GDP deflator (annual %)",NY.GDP.DEFL.KD.ZG,-2.51384468385538
+,,,,
+,,,,
+,,,,
+Data from database: World Development Indicators,,,,
+Last Updated: 03/01/2018,,,,
