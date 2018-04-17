@@ -32,6 +32,9 @@
   .table thead .noTop {
     border-top: none;
   }
+  #RandomnessSlider .slider-selection {
+  background: #BABABA;
+}
 </style>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation-->
@@ -98,96 +101,23 @@
   </nav>
   <div class="content-wrapper">
     <div class="container-fluid">
-      <!-- Group Stage-->
-      <div class="card mb-3">
-        <div class="card-header">
-          Group Stage Projections
+      <h1>Create Custom Simulation</h1>
+      <form class="col-sm-12 col-md-6">
+        <div class="form-group">
+          <label for="selectCriteria">Select outcome criterion:</label>
+          <select class="form-control">
+            <option>Better Elo</option>
+            <option>Normal Elo Simulation</option>
+            <option>Better Star Player</option>
+            <option>More World Cup Wins</option>
+            <option>Larger GDP</option>
+            <option>Larger GDP per Capita</option>
+          </select>
         </div>
-        <div class="card-body">
-          <div class="card-deck">
-            <div class="card">
-              <div class="card-header">Group A</div>
-              <div class="card-body">
-                <table class="table table-sm">
-                  <thead>
-                    <tr>
-                      <th class="noTop"></th>
-                      <th class="noTop">Country</th>
-                      <th class="noTop">Elo</th>
-                      <th class="noTop">Move On</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="teamLogo"><img src="asdf"></td>
-                      <td>Egypt</td>
-                      <td>123</td>
-                      <td class="classForColorStyle">22</td>
-                    </tr>
-                    <tr>
-                      <td class="teamLogo"><img src="asdf"></td>
-                      <td>Russia</td>
-                      <td>124</td>
-                      <td class="classForColorStyle">33</td>
-                    </tr>
-                    <tr>
-                      <td class="teamLogo"><img src="asdf"></td>
-                      <td>Saudi Arabia</td>
-                      <td>345</td>
-                      <td class="classForColorStyle">100</td>
-                    </tr>
-                    <tr>
-                      <td class="teamLogo"><img src="asdf"></td>
-                      <td>Uruguay</td>
-                      <td>685</td>
-                      <td class="classForColorStyle">26</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+        <div class="form-group">
+          <label>Select Amount of Randomness in Game Outcomes (0 means win criterion decides every time, 100 means coin flip):</label>
+          0&nbsp&nbsp&nbsp<input id="Randomness" data-slider-id='RandomnessSlider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="0" data-slider-tooltip="show" data-slider-tooltip-position="top"/>&nbsp&nbsp&nbsp100
         </div>
-      </div>
-      <div class="card mb-3">
-        <div class="card-header">
-          Round by Round Projections
-        </div>
-        <div class="card-body">
-          <table class="table table-sm">
-            <thead>
-              <tr>
-                <th colspan="4" class="noBottom noTop"></th>
-                <th colspan="4" class="noTop" style="text-align:center">Chance of Reaching Round of</th>
-                <th class="noBottom noTop"></th>
-              </tr>
-              <tr>
-                <th class="noTop"></th>
-                <th class="noTop">Team</th>
-                <th class="noTop" style="width: 10%">Group</th>
-                <th class="noTop" style="width: 10%">Elo</th>
-                <th style="width: 10%; text-align: right;">16</th>
-                <th style="width: 10%; text-align: right;">8</th>
-                <th style="width: 10%; text-align: right;">4</th>
-                <th style="width: 10%; text-align: right;">2</th>
-                <th class="noTop" style="width: 10%; text-align: right;">Win</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><img src="asdf"></td>
-                <td>Russia</td>
-                <td>A</td>
-                <td>124</td>
-                <td class="classForColorStyle">33</td>
-                <td class="classForColorStyle">15</td>
-                <td class="classForColorStyle">6</td>
-                <td class="classForColorStyle">2</td>
-                <td class="classForColorStyle">1</td>
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
@@ -230,6 +160,8 @@
     <!-- Custom scripts for this page-->
     <script src="js/sb-admin-datatables.min.js"></script>
     <script src="js/sb-admin-charts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.min.css" />
 
     <script type="text/javascript">
       function getColor(value){
@@ -241,6 +173,11 @@
         $(this).css("background-color", getColor($(this).text()/100));
         console.log(getColor($(this).text()/100));
       });
+    </script>
+    <script type="text/javascript">
+      // With JQuery
+      $('#Randomness').slider();
+
     </script>
   </div>
 </body>
