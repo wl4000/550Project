@@ -1,0 +1,7 @@
+{
+  "name": "World Cup App",
+  "description": "An app for simulating the world cup",
+  "repository": "https://github.com/wl4000/550Project",
+  "logo": "",
+  "keywords": ["node", "express", "static"]
+}
