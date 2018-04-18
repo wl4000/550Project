@@ -6,8 +6,13 @@ app.set('port', (process.env.PORT || 5000))
 app.use(express.static(__dirname + '/public'))
 
 app.get('/', function(request, response) {
-	  response.sendFile(path.join(__dirname, '/', 'newfile.html'));
+	response.sendFile(path.join(__dirname, '/', 'index.html'));
 })
+
+app.get('/:input', function(request, response) {
+	response.sendFile(path.join(__dirname, '/', request.params["input"]))
+})
+
 
 
 /*app.get('/friends', function(request, response) {
