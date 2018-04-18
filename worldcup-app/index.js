@@ -35,6 +35,13 @@ app.get('/getSimulation', function(request, response) {
 	});
 })
 
+app.get('/getCountryData', function(request, response) {
+	connection.query('select * from country;',
+	function (error, results, fields) {
+	  if (error) throw error;
+	  response.json(results);
+	});
+})
 
 
 /*app.get('/friends', function(request, response) {

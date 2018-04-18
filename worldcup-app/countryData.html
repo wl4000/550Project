@@ -17,6 +17,19 @@
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script type="text/javascript">
+    var app = angular.module('index',[]);
+    app.controller('indexController', function($scope, $http) {
+        $scope.show = 0;
+        var request = $http.get("getSimulation", {params: {numSimulations: 10000, randomness: 0, by: "normalElo"}}).then
+        (function successCallback(data) {
+            $scope.data = data.data;
+            $scope.show = 1;
+        }, function errorCallback(data) {
+            console.log('err');
+        });
+    });
+  </script>
 </head>
 <style type="text/css">
   .classForColorStyle {
