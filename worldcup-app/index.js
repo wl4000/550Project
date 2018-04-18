@@ -9,9 +9,15 @@ app.get('/', function(request, response) {
 	response.sendFile(path.join(__dirname, '/', 'index.html'));
 })
 
-app.get('/:input', function(request, response) {
-	response.sendFile(path.join(__dirname, '/', request.params["input"]))
+app.get('/customSimulation', function(request, response) {
+	response.sendFile(path.join(__dirname, '/', 'customSimulation.html'));
 })
+
+app.get('/countryData', function(request, response) {
+	response.sendFile(path.join(__dirname, '/', 'countryData.html'));
+})
+
+app.use(express.static(__dirname + '/static/'));
 
 
 
