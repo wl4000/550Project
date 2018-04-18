@@ -18,17 +18,39 @@
   <link href="css/sb-admin.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
   <script type="text/javascript">
-    var app = angular.module('index',[]);
-    app.controller('indexController', function($scope, $http) {
+    var app = angular.module('countryData',[]);
+    app.controller('countryDataController', function($scope, $http) {
         $scope.show = 0;
-        var request = $http.get("getSimulation", {params: {numSimulations: 10000, randomness: 0, by: "normalElo"}}).then
+        var request = $http.get("getCountryData").then
         (function successCallback(data) {
             $scope.data = data.data;
             $scope.show = 1;
+            angular.forEach($scope.data, function(value, key) {
+              value.gdp = value.gdp.formatMoney(2,'.',',');
+              value.gdp_per_capita = value.gdp_per_capita.formatMoney(2,'.',',');
+            });
+            var jq = $.noConflict();
+            setTimeout(function(){
+               jq("#dataTable").DataTable();
+            }, 0);
         }, function errorCallback(data) {
             console.log('err');
-        });
+        });        
     });
+
+    Number.prototype.formatMoney = function(c, d, t){
+      var n = this, 
+      c = isNaN(c = Math.abs(c)) ? 2 : c, 
+      d = d == undefined ? "." : d, 
+      t = t == undefined ? "," : t, 
+      s = n < 0 ? "-" : "", 
+      i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))), 
+      j = (j = i.length) > 3 ? j % 3 : 0;
+      return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+    };
+
+    function makeTableAppear() {
+    }
   </script>
 </head>
 <style type="text/css">
@@ -53,7 +75,7 @@
   background: #BABABA;
   }
 </style>
-<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<body class="fixed-nav sticky-footer bg-dark" id="page-top" ng-app="countryData">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <a class="navbar-brand" href="/">World Cup Simulator</a>
@@ -117,10 +139,10 @@
     </div>
   </nav>
   <div class="content-wrapper">
-    <div class="container-fluid">
+    <div class="container-fluid" ng-controller="countryDataController">
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-table"></i> Data Table Example</div>
+          <i class="fa fa-table"></i> Country Data</div>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -145,21 +167,13 @@
                 </tr>
               </tfoot>
               <tbody>
-                <tr>
-                  <td>Russia</td>
-                  <td>A</td>
-                  <td>1234</td>
-                  <td>123412341234</td>
-                  <td>12</td>
-                  <td>0</td>
-                </tr>
-                <tr>
-                  <td>Saudi Arabia</td>
-                  <td>A</td>
-                  <td>1223</td>
-                  <td>12341231324</td>
-                  <td>234</td>
-                  <td>0</td>
+                <tr ng-repeat="x in data">
+                  <td>{{x.country}}</td>
+                  <td>{{x.team_group}}</td>
+                  <td>{{x.elo_rating}}</td>
+                  <td>${{x.gdp}}</td>
+                  <td>${{x.gdp_per_capita}}</td>
+                  <td>{{x.wins}} change this</td>
                 </tr>
               </tbody>
             </table>
@@ -205,7 +219,6 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
-    <script src="js/sb-admin-datatables.min.js"></script>
 
     <script type="text/javascript">
       function getColor(value){
@@ -217,11 +230,6 @@
         $(this).css("background-color", getColor($(this).text()/100));
         console.log(getColor($(this).text()/100));
       });
-    </script>
-    <script type="text/javascript">
-      // With JQuery
-      $('#Randomness').slider();
-      $('#Simulations').slider();
     </script>
   </div>
 </body>
