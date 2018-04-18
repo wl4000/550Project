@@ -1,6 +1,14 @@
 var express = require('express')
 var app = express()
 var path = require('path')
+var mysql = require('mysql')
+
+var connection = mysql.createConnection({
+	  host     : 'cis550project.cei97a31mv1e.us-east-2.rds.amazonaws.com',
+	  user     : 'cis550group4',
+	  password : 'joeyisbeta42069',
+	  database : 'cis550project'
+	});
 
 app.set('port', (process.env.PORT || 5000))
 app.use(express.static(__dirname + '/public'))
@@ -18,6 +26,14 @@ app.get('/countryData', function(request, response) {
 })
 
 app.use(express.static(__dirname + '/static/'));
+
+app.get('/getSimulation', function(request, response) {
+	connection.query('select * from country;',
+	function (error, results, fields) {
+	  if (error) throw error;
+	  response.json(results);
+	});
+})
 
 
 
