@@ -17,6 +17,52 @@
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script type="text/javascript">
+    var app = angular.module('customSimulation',[]);
+    app.controller('customSimulationController', function($scope, $http) {
+        $scope.show = 0;
+        var jq = $.noConflict();
+        $scope.getData = function() {
+          $scope.randomness = jq("#Randomness").val();
+          $scope.numSimulations = jq("#Simulations").val();
+          $scope.by = jq("#criterion").val();
+          if ($scope.by == "bElo" || $scope.by=="nElo") {
+            $scope.simBy = "Elo";
+          } else if ($scope.by == "star") {
+            $scope.simBy = "Star Overall";
+          } else if ($scope.by == "wins") {
+            $scope.simBy = "World Cup Titles";
+          } else if ($scope.by == "gdp") {
+            $scope.simBy = "GDP";
+          } else {
+            $scope.simBy = "GDP Per Capita";
+          }
+          console.log($scope.randomness + "   " + $scope.numSimulations + "   " + $scope.by);
+          var request = $http.get("getSimulation", {params: {numSimulations: $scope.numSimulations, randomness: $scope.randomness, by: $scope.by}}).then
+          (function successCallback(data) {
+              $scope.data = data.data;
+              $scope.show = 1;
+              angular.forEach($scope.data, function(value, key) {
+                value.gdp = value.gdp.formatMoney(2,'.',',');
+                value.gdp_per_capita = value.gdp_per_capita.formatMoney(2,'.',',');
+              });
+          }, function errorCallback(data) {
+              console.log('err');
+          });
+        }        
+    });
+
+    Number.prototype.formatMoney = function(c, d, t){
+      var n = this, 
+      c = isNaN(c = Math.abs(c)) ? 2 : c, 
+      d = d == undefined ? "." : d, 
+      t = t == undefined ? "," : t, 
+      s = n < 0 ? "-" : "", 
+      i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))), 
+      j = (j = i.length) > 3 ? j % 3 : 0;
+      return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+    };
+  </script>
 </head>
 <style type="text/css">
   .classForColorStyle {
@@ -40,7 +86,7 @@
   background: #BABABA;
   }
 </style>
-<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<body class="fixed-nav sticky-footer bg-dark" id="page-top" ng-app="customSimulation">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <a class="navbar-brand" href="/">World Cup Simulator</a>
@@ -104,12 +150,12 @@
     </div>
   </nav>
   <div class="content-wrapper">
-    <div class="container-fluid">
+    <div class="container-fluid" ng-controller="customSimulationController">
       <h1>Create Custom Simulation</h1>
-      <form class="col-sm-12 col-md-6">
+      <div class="col-sm-12 col-md-6">
         <div class="form-group">
           <label for="selectCriteria">Select outcome criterion:</label>
-          <select class="form-control" name="criterion">
+          <select class="form-control" name="criterion" id="criterion">
             <option value="bElo">Better Elo</option>
             <option value="nElo">Normal Elo Simulation</option>
             <option value="star">Better Star Player</option>
@@ -126,10 +172,10 @@
           <label>Select Number of Simulations to Run:</label><br>
           1&nbsp&nbsp&nbsp<input id="Simulations" data-slider-id='SimulationsSlider' type="text" data-slider-min="1" data-slider-max="10000" data-slider-step="1" data-slider-value="1" data-slider-tooltip="show" data-slider-tooltip-position="top" name="simulations" />&nbsp&nbsp&nbsp10000
         </div>
-        <input type="submit" class="btn btn-primary">
-      </form><br><br>
+        <button type="submit" ng-click="getData()" class="btn btn-primary">Submit</button>
+      </div><br><br>
       <!-- Group Stage-->
-      <div class="card mb-3">
+      <div class="card mb-3" ng-show="show">
         <div class="card-header">
           Group Stage Projections
         </div>
@@ -143,8 +189,8 @@
                     <tr>
                       <th class="noTop"></th>
                       <th class="noTop">Country</th>
-                      <th class="noTop">SimBy</th>
-                      <th class="noTop">Move On</th>
+                      <th class="noTop">{{simBy}}</th>
+                      <th class="noTop" style="text-align: right;">Move On</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -179,7 +225,7 @@
           </div>
         </div>
       </div>
-      <div class="card mb-3">
+      <div class="card mb-3" ng-show="show">
         <div class="card-header">
           Round by Round Projections
         </div>
@@ -195,7 +241,7 @@
                 <th class="noTop"></th>
                 <th class="noTop">Team</th>
                 <th class="noTop" style="width: 10%">Group</th>
-                <th class="noTop" style="width: 10%">SimBy</th>
+                <th class="noTop" style="width: 10%">{{simBy}}</th>
                 <th style="width: 10%; text-align: right;">16</th>
                 <th style="width: 10%; text-align: right;">8</th>
                 <th style="width: 10%; text-align: right;">4</th>
@@ -252,12 +298,9 @@
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- Page level plugin JavaScript-->
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
-    <script src="js/sb-admin-datatables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.min.css" />
 
