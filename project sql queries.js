@@ -118,7 +118,7 @@ app.get('/star_player', function(request, response) {
         }
    
     });
-    //Schema -> country,team_group, wins
+    //Schema -> country,team_group, score
     connection.query('SELECT a.nationality as country,b.team_group as team_group, max(a.overall) as score FROM player a JOIN country b on a.nationality=b.country GROUP BY a.nationality, b.team_group;',function(error, results, fields) {
       if(error) {
         console.error('error:' + error.stack);
