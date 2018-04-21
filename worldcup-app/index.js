@@ -25,6 +25,10 @@ app.get('/countryData', function(request, response) {
 	response.sendFile(path.join(__dirname, '/', 'countryData.html'));
 })
 
+app.get('/otherModules', function(request, response) {
+	response.sendFile(path.join(__dirname, '/', 'other.html'));
+})
+
 app.use(express.static(__dirname + '/static/'));
 
 // ----------------------------------------------------------------------------

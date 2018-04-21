@@ -143,46 +143,7 @@
   </nav>
   <div class="content-wrapper">
     <div class="container-fluid" ng-controller="countryDataController">
-      <div class="card mb-3">
-        <div class="card-header">
-          <i class="fa fa-table"></i> Country Data</div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Country</th>
-                  <th>Group</th>
-                  <th>Elo</th>
-                  <th>GDP</th>
-                  <th>GDP Per Capita</th>
-                  <th>World Cup Wins</th>
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                  <th>Country</th>
-                  <th>Group</th>
-                  <th>Elo</th>
-                  <th>GDP</th>
-                  <th>GDP Per Capita</th>
-                  <th>World Cup Wins</th>
-                </tr>
-              </tfoot>
-              <tbody>
-                <tr ng-repeat="x in data">
-                  <td>{{x.country}}</td>
-                  <td>{{x.team_group}}</td>
-                  <td>{{x.elo_rating}}</td>
-                  <td>${{x.gdp}}</td>
-                  <td>${{x.gdp_per_capita}}</td>
-                  <td>{{x.wins}} change this</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      
     </div>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
