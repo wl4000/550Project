@@ -28,16 +28,10 @@ app.get('/countryData', function(request, response) {
 app.get('/otherModules', function(request, response) {
 	response.sendFile(path.join(__dirname, '/', 'other.html'));
 })
+
+
 //Get ELO Query
 app.get('/elo', function(request, response) {
-    var mysql = require('mysql');
-    var connection = mysql.createConnection({
-      host: ' cis550project.cei97a31mv1e.us-east-2.rds.amazonaws.com',
-      user: 'cis550guest',
-      password: 'cis550guestpassword',
-      database: 'cis550project'
-    });
-   
     connection.connect(function(err) {
       if (err) {
           console.error('error connecting: ' + err.stack);
@@ -57,15 +51,7 @@ app.get('/elo', function(request, response) {
 //Get Larger GDP and Larger GDP per capita
 //Get GDP
 app.get('/GDP', function(request, response) {
-    var mysql = require('mysql');
-    var connection = mysql.createConnection({
-      host: ' cis550project.cei97a31mv1e.us-east-2.rds.amazonaws.com',
-      user: 'cis550guest',
-      password: 'cis550guestpassword',
-      database: 'cis550project'
-    });
-   
-    connection.connect(function(err) {
+	connection.connect(function(err) {
       if (err) {
           console.error('error connecting: ' + err.stack);
           return;
@@ -82,15 +68,7 @@ app.get('/GDP', function(request, response) {
   })
 //Get GDP per Capita
 app.get('/GDP_per_capita', function(request, response) {
-    var mysql = require('mysql');
-    var connection = mysql.createConnection({
-      host: ' cis550project.cei97a31mv1e.us-east-2.rds.amazonaws.com',
-      user: 'cis550guest',
-      password: 'cis550guestpassword',
-      database: 'cis550project'
-    });
-   
-    connection.connect(function(err) {
+   	connection.connect(function(err) {
       if (err) {
           console.error('error connecting: ' + err.stack);
           return;
@@ -107,14 +85,6 @@ app.get('/GDP_per_capita', function(request, response) {
   })
 //Get Wins
 app.get('/wins', function(request, response) {
-    var mysql = require('mysql');
-    var connection = mysql.createConnection({
-      host: ' cis550project.cei97a31mv1e.us-east-2.rds.amazonaws.com',
-      user: 'cis550guest',
-      password: 'cis550guestpassword',
-      database: 'cis550project'
-    });
-   
     connection.connect(function(err) {
       if (err) {
           console.error('error connecting: ' + err.stack);
@@ -133,14 +103,6 @@ app.get('/wins', function(request, response) {
   })
 //Better Star Player
 app.get('/star_player', function(request, response) {
-    var mysql = require('mysql');
-    var connection = mysql.createConnection({
-      host: ' cis550project.cei97a31mv1e.us-east-2.rds.amazonaws.com',
-      user: 'cis550guest',
-      password: 'cis550guestpassword',
-      database: 'cis550project'
-    });
-   
     connection.connect(function(err) {
       if (err) {
           console.error('error connecting: ' + err.stack);
