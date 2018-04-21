@@ -48,7 +48,7 @@ app.get('/getSimulation', function(request, response) {
 // ----------------------------------------------------------------------------
 
 app.get('/getCountryData', function(request, response) {
-	connection.query('select country.country country, country.team_group team_group, country.elo_rating elo, country.gdp, country.gdp_per_capita, max(player.overall) player_max, c.wins, d.num_appearances from country join player on player.nationality=country.country join (SELECT country, count(*)-1 AS wins FROM (SELECT country, team_group FROM country UNION ALL SELECT a.winner AS country, b.team_group AS team_group FROM world_cup_outcomes a JOIN country b ON a.winner=b.country) AS temp GROUP BY country, team_group) c on c.country=country.country join (select count(*) num_appearances, country from participated_in group by country) d on d.country = country.country group by country;',
+	connection.query('select country.country country, country.team_group team_group, country.elo_rating elo, country.gdp, country.gdp_per_capita, max(player.overall) player_max, c.wins, IFNULL(d.num_appearances,0) num_appearances from country join player on player.nationality=country.country join (SELECT country, count(*)-1 AS wins FROM (SELECT country, team_group FROM country UNION ALL SELECT a.winner AS country, b.team_group AS team_group FROM world_cup_outcomes a JOIN country b ON a.winner=b.country) AS temp GROUP BY country, team_group) c on c.country=country.country left join (select count(*) num_appearances, country from participated_in group by country) d on d.country = country.country group by country;',
 	function (error, results, fields) {
 	  if (error) throw error;
 	  response.json(results);
@@ -57,8 +57,42 @@ app.get('/getCountryData', function(request, response) {
 
 app.get('/getCorrelation', function(request, response) {
     var criterion1 = request.query.criterion1;
+    if (criterion1 == 1) {
+    	criterion1 = "country.elo_rating";
+    } else if (criterion1 == 2) {
+    	criterion1 = "country.gdp"
+    } else if (criterion1 == 3) {
+    	criterion1 = "country.gdp_per_capita"
+    } else if (criterion1 == 4) {
+    	criterion1 = "country.interest_rate"
+    } else if (criterion1 == 5) {
+    	criterion1 = "country.unemployment_rate"
+    } else if (criterion1 == 6) {
+    	criterion1 = "d.num_appearances"
+    } else if (criterion1 == 7) {
+    	criterion1 = "c.wins"
+    } else {
+    	"max(player.overall) player_max"
+    }
     var criterion2 = request.query.criterion2;
-	connection.query('select * from participated_in',
+    if (criterion2 == 1) {
+    	criterion2 = "country.elo_rating";
+    } else if (criterion2 == 2) {
+    	criterion2 = "country.gdp"
+    } else if (criterion2 == 3) {
+    	criterion2 = "country.gdp_per_capita"
+    } else if (criterion2 == 4) {
+    	criterion2 = "country.interest_rate"
+    } else if (criterion2 == 5) {
+    	criterion2 = "country.unemployment_rate"
+    } else if (criterion2 == 6) {
+    	criterion2 = "IFNULL(d.num_appearances,0) num_appearances"
+    } else if (criterion2 == 7) {
+    	criterion2 = "c.wins"
+    } else {
+    	"max(player.overall) player_max"
+    }
+	connection.query('select country.country,' + criterion1 + ', ' + criterion2 + ' from country join player on player.nationality=country.country join (SELECT country, count(*)-1 AS wins FROM (SELECT country, team_group FROM country UNION ALL SELECT a.winner AS country, b.team_group AS team_group FROM world_cup_outcomes a JOIN country b ON a.winner=b.country) AS temp GROUP BY country, team_group) c on c.country=country.country left join (select count(*) num_appearances, country from participated_in group by country) d on d.country = country.country group by country;',
 	function (error, results, fields) {
 	  if (error) throw error;
 	  response.json(results);
