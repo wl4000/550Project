@@ -34,6 +34,23 @@
           });
         }             
     });
+    app.controller('CorrelationController', function($scope, $http) {
+        $scope.showCorrelation = 0;
+        var jq2 = jQuery.noConflict();
+        $scope.getCorrelation = function() {
+          $scope.criterion1 = jq2("#firstCriterionCorr").val();
+          $scope.criterion2 = jq2("#secondCriterionCorr").val();
+          var request = $http.get("getCorrelation", {params: {criterion1: $scope.criterion1, criterion2: $scope.criterion2}}).then
+          (function successCallback(data) {
+              console.log(data.data)
+              $scope.data = data.data;
+              $scope.correlation = .78;
+              $scope.showCorrelation = 1;
+          }, function errorCallback(data) {
+              console.log('err');
+          });
+        }             
+    });
 
     Number.prototype.formatMoney = function(c, d, t){
       var n = this, 
@@ -144,7 +161,7 @@
       <div ng-controller="DepthChartController">
         <div class="col-sm-12 col-md-6">
           <div class="form-group">
-            <label for="selectCriteria">Select Country:</label>
+            <label for="countryDepthChart">Select Country:</label>
             <select class="form-control" name="countryDepthChart" id="countryDepthChart">
               <option value="Argentina">Argentina</option>
               <option value="Australia">Australia</option>
@@ -188,8 +205,8 @@
         </div>
         <div class="card-body">
           <div class="card-deck">
-            <div class="card" ng-repeat="x in data" ng-if="$index < 4">
-              <div class="card-header">LW</div>
+            <div class="card" ng-repeat="(key,value) in data" ng-if="$index < 4">
+              <div class="card-header">{{key}}</div>
               <div class="card-body">
                 <table class="table table-sm">
                   <thead>
@@ -200,25 +217,10 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Ronaldo</td>
-                      <td>90</td>
-                      <td>$$$$$</td>
-                    </tr>
-                    <tr>
-                      <td>Ronaldo</td>
-                      <td>90</td>
-                      <td>$$$$$</td>
-                    </tr>
-                    <tr>
-                      <td>Ronaldo</td>
-                      <td>90</td>
-                      <td>$$$$$</td>
-                    </tr>
-                    <tr>
-                      <td>Ronaldo</td>
-                      <td>90</td>
-                      <td>$$$$$</td>
+                    <tr ng-repeat="x in value">
+                      <td>{{x.name}}</td>
+                      <td>{{x.overall}}</td>
+                      <td>${{x.wage}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -226,8 +228,8 @@
             </div>
           </div><br><br>
           <div class="card-deck">
-            <div class="card" ng-repeat="x in data" ng-if="$index > 3 && $index < 8">
-              <div class="card-header">LW</div>
+            <div class="card" ng-repeat="(key,value) in data" ng-if="$index > 3 && $index < 8">
+              <div class="card-header">{{key}}</div>
               <div class="card-body">
                 <table class="table table-sm">
                   <thead>
@@ -238,25 +240,10 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Ronaldo</td>
-                      <td>90</td>
-                      <td>$$$$$</td>
-                    </tr>
-                    <tr>
-                      <td>Ronaldo</td>
-                      <td>90</td>
-                      <td>$$$$$</td>
-                    </tr>
-                    <tr>
-                      <td>Ronaldo</td>
-                      <td>90</td>
-                      <td>$$$$$</td>
-                    </tr>
-                    <tr>
-                      <td>Ronaldo</td>
-                      <td>90</td>
-                      <td>$$$$$</td>
+                    <tr ng-repeat="x in value">
+                      <td>{{x.name}}</td>
+                      <td>{{x.overall}}</td>
+                      <td>${{x.wage}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -264,8 +251,8 @@
             </div>
           </div><br><br>
           <div class="card-deck">
-            <div class="card" ng-repeat="x in data" ng-if="$index > 7 && $index < 12">
-              <div class="card-header">LW</div>
+            <div class="card" ng-repeat="(key,value) in data" ng-if="$index > 7 && $index < 12">
+              <div class="card-header">{{key}}</div>
               <div class="card-body">
                 <table class="table table-sm">
                   <thead>
@@ -276,25 +263,10 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Ronaldo</td>
-                      <td>90</td>
-                      <td>$$$$$</td>
-                    </tr>
-                    <tr>
-                      <td>Ronaldo</td>
-                      <td>90</td>
-                      <td>$$$$$</td>
-                    </tr>
-                    <tr>
-                      <td>Ronaldo</td>
-                      <td>90</td>
-                      <td>$$$$$</td>
-                    </tr>
-                    <tr>
-                      <td>Ronaldo</td>
-                      <td>90</td>
-                      <td>$$$$$</td>
+                    <tr ng-repeat="x in value">
+                      <td>{{x.name}}</td>
+                      <td>{{x.overall}}</td>
+                      <td>${{x.wage}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -302,8 +274,8 @@
             </div>
           </div><br><br>
           <div class="card-deck">
-            <div class="card" ng-repeat="x in data" ng-if="$index > 11">
-              <div class="card-header">LW</div>
+            <div class="card" ng-repeat="(key,value) in data" ng-if="$index > 11">
+              <div class="card-header">{{key}}</div>
               <div class="card-body">
                 <table class="table table-sm">
                   <thead>
@@ -314,25 +286,10 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Ronaldo</td>
-                      <td>90</td>
-                      <td>$$$$$</td>
-                    </tr>
-                    <tr>
-                      <td>Ronaldo</td>
-                      <td>90</td>
-                      <td>$$$$$</td>
-                    </tr>
-                    <tr>
-                      <td>Ronaldo</td>
-                      <td>90</td>
-                      <td>$$$$$</td>
-                    </tr>
-                    <tr>
-                      <td>Ronaldo</td>
-                      <td>90</td>
-                      <td>$$$$$</td>
+                    <tr ng-repeat="x in value">
+                      <td>{{x.name}}</td>
+                      <td>{{x.overall}}</td>
+                      <td>${{x.wage}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -342,6 +299,38 @@
         </div>
       </div>
       </div>
+      <h1>Correlations</h1>
+      <div ng-controller="CorrelationController">
+        <div class="col-sm-12 col-md-6">
+          <div class="form-group">
+            <label for="firstCriterionCorr">Select First Criterion:</label>
+            <select class="form-control" name="firstCriterionCorr" id="firstCriterionCorr">
+              <option>Elo</option>
+              <option>GDP</option>
+              <option>GDP per Capita</option>
+              <option>Interest Rate</option>
+              <option>Unemployment</option>
+              <option>World Cup Appearances</option>
+              <option>World Cup Wins</option>
+              <option>Star Player Rating</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="secondCriterionCorr">Select Second Criterion:</label>
+            <select class="form-control" name="secondCriterionCorr" id="secondCriterionCorr">
+              <option>Elo</option>
+              <option>GDP</option>
+              <option>GDP per Capita</option>
+              <option>Interest Rate</option>
+              <option>Unemployment</option>
+              <option>World Cup Appearances</option>
+              <option>World Cup Wins</option>
+              <option>Star Player Rating</option>
+            </select>
+          </div>
+          <button type="submit" ng-click="getCorrelation()" class="btn btn-primary">Submit</button>
+        </div><br>
+        <h2 ng-show="showCorrelation">&nbsp Correlation: {{correlation}}</h2>
     </div>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
