@@ -34,7 +34,11 @@ app.get('/getSimulation', function(request, response) {
 	connection.query(sql,
 	function (error, results, fields) {
 	  if (error) throw error;
-	  response.json(results);
+	  var by = request.query.by;
+	  var randomness = request.query.randomness;
+	  var numSimulations = request.query.numSimulations;
+	  var simulationResults = runSimulations(by, randomness, numSimulations, results);
+	  response.json(simulationResults);
 	});
 })
 // ----------------------------------------------------------------------------
@@ -85,4 +89,59 @@ function getQuery(by) {
 	}
 
 	return sql;
+}
+
+// TODO
+// Run Simulations
+function runSimulations(by, randomness, numSimulations, data) {
+	// Create standardized countryData JSON object
+	var countryData = [];
+	for (var i = 0; i < data.length; i++) {
+		country = data[i];
+		if (by == "bElo" || by == "nElo") {
+			countryData[i] = {"country": country.country, "group": country.team_group, "rating": country.elo_rating};
+		} else if (by == "star") {
+			countryData[i] = {"country": country.country, "group": country.team_group, "rating": country.score};
+		} else if (by == "wins") {
+			countryData[i] = {"country": country.country, "group": country.team_group, "rating": country.wins};
+		} else if (by == "gdp") {
+			countryData[i] = {"country": country.country, "group": country.team_group, "rating": country.gdp};
+		} else if (by == "capita") {
+			countryData[i] = {"country": country.country, "group": country.team_group, "rating": country.gdp_per_capita};
+		} else {
+			console.error("Invalid criterion");
+			return;
+		}
+	}
+	// Sort countryData by group
+	countryData = countryData.sort(function(j1, j2) { return j1.group.localeCompare(j2.group) });
+	
+	for (var i = 0; i < numSimulations; i++) {
+
+	}
+}
+
+// Run Single Simulation
+function runSingleSimulation(by, randomness, countryData) {
+	return "kek";
+}
+
+// Simulate Match
+function simulateMatch(by, randomness, c1, c2) {
+	return "kek";
+}
+
+/* NOTES
+   - Fields to include: gamesWon, gamesPlayed, gamesLost, top16, top8, top4, top2, titles
+*/
+
+// Add corresponding fields of list of JSONs
+function addJSON(l1, l2) {
+	if (l1.length != l2.length) {
+		console.error("JSON lists have unequal length");
+		return;
+	}
+	for (var i = 0; i < l1.length; i++) {
+		//TODO
+	}
 }

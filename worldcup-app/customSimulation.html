@@ -40,6 +40,7 @@
           console.log($scope.randomness + "   " + $scope.numSimulations + "   " + $scope.by);
           var request = $http.get("getSimulation", {params: {numSimulations: $scope.numSimulations, randomness: $scope.randomness, by: $scope.by}}).then
           (function successCallback(data) {
+              console.log(data.data)
               $scope.data = data.data;
               $scope.show = 1;
               angular.forEach($scope.data, function(value, key) {
