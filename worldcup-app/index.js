@@ -55,6 +55,14 @@ app.get('/getCountryData', function(request, response) {
 	});
 })
 
+app.get('/getDepthChart', function(request, response) {
+	connection.query('select * from country;',
+	function (error, results, fields) {
+	  if (error) throw error;
+	  response.json(results);
+	});
+})
+
 app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'))
 })

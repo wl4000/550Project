@@ -19,23 +19,20 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
   <script type="text/javascript">
     var app = angular.module('countryData',[]);
-    app.controller('countryDataController', function($scope, $http) {
-        $scope.show = 0;
-        var request = $http.get("getCountryData").then
-        (function successCallback(data) {
-            $scope.data = data.data;
-            $scope.show = 1;
-            angular.forEach($scope.data, function(value, key) {
-              value.gdp = value.gdp.formatMoney(2,'.',',');
-              value.gdp_per_capita = value.gdp_per_capita.formatMoney(2,'.',',');
-            });
-            var jq = $.noConflict();
-            setTimeout(function(){
-               jq("#dataTable").DataTable();
-            }, 0);
-        }, function errorCallback(data) {
-            console.log('err');
-        });        
+    app.controller('DepthChartController', function($scope, $http) {
+        $scope.showDepthChart = 0;
+        var jq = $.noConflict();
+        $scope.getDepthChart = function() {
+          $scope.country = jq("#countryDepthChart").val();
+          var request = $http.get("getDepthChart", {params: {country: $scope.country}}).then
+          (function successCallback(data) {
+              console.log(data.data)
+              $scope.data = data.data;
+              $scope.showDepthChart = 1;
+          }, function errorCallback(data) {
+              console.log('err');
+          });
+        }             
     });
 
     Number.prototype.formatMoney = function(c, d, t){
@@ -142,8 +139,209 @@
     </div>
   </nav>
   <div class="content-wrapper">
-    <div class="container-fluid" ng-controller="countryDataController">
-      
+    <div class="container-fluid">
+      <h1>Country Depth Chart</h1>
+      <div ng-controller="DepthChartController">
+        <div class="col-sm-12 col-md-6">
+          <div class="form-group">
+            <label for="selectCriteria">Select Country:</label>
+            <select class="form-control" name="countryDepthChart" id="countryDepthChart">
+              <option value="Argentina">Argentina</option>
+              <option value="Australia">Australia</option>
+              <option value="Belgium">Belgium</option>
+              <option value="Brazil">Brazil</option>
+              <option value="Colombia">Colombia</option>
+              <option value="Costa Rica">Costa Rica</option>
+              <option value="Croatia">Croatia</option>
+              <option value="Denmark">Denmark</option>
+              <option value="Egypt">Egypt</option>
+              <option value="England">England</option>
+              <option value="France">France</option>
+              <option value="Germany">Germany</option>
+              <option value="Iceland">Iceland</option>
+              <option value="Iran">Iran</option>
+              <option value="Japan">Japan</option>
+              <option value="Mexico">Mexico</option>
+              <option value="Morocco">Morocco</option>
+              <option value="Nigeria">Nigeria</option>
+              <option value="Panama">Panama</option>
+              <option value="Peru">Peru</option>
+              <option value="Poland">Poland</option>
+              <option value="Portugal">Portugal</option>
+              <option value="Russia">Russia</option>
+              <option value="Saudi Arabia">Saudi Arabia</option>
+              <option value="Senegal">Senegal</option>
+              <option value="Serbia">Serbia</option>
+              <option value="South Korea">South Korea</option>
+              <option value="Spain">Spain</option>
+              <option value="Sweden">Sweden</option>
+              <option value="Switzerland">Switzerland</option>
+              <option value="Tunisia">Tunisia</option>
+              <option value="Uruguay">Uruguay</option>
+            </select>
+          </div>
+          <button type="submit" ng-click="getDepthChart()" class="btn btn-primary">Submit</button>
+        </div><br><br>
+        <div class="card mb-3" ng-show="showDepthChart">
+        <div class="card-header">
+          {{country}} Depth Chart
+        </div>
+        <div class="card-body">
+          <div class="card-deck">
+            <div class="card" ng-repeat="x in data" ng-if="$index < 4">
+              <div class="card-header">LW</div>
+              <div class="card-body">
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th class="noTop">Name</th>
+                      <th class="noTop">Overall</th>
+                      <th class="noTop">Wage</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Ronaldo</td>
+                      <td>90</td>
+                      <td>$$$$$</td>
+                    </tr>
+                    <tr>
+                      <td>Ronaldo</td>
+                      <td>90</td>
+                      <td>$$$$$</td>
+                    </tr>
+                    <tr>
+                      <td>Ronaldo</td>
+                      <td>90</td>
+                      <td>$$$$$</td>
+                    </tr>
+                    <tr>
+                      <td>Ronaldo</td>
+                      <td>90</td>
+                      <td>$$$$$</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div><br><br>
+          <div class="card-deck">
+            <div class="card" ng-repeat="x in data" ng-if="$index > 3 && $index < 8">
+              <div class="card-header">LW</div>
+              <div class="card-body">
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th class="noTop">Name</th>
+                      <th class="noTop">Overall</th>
+                      <th class="noTop">Wage</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Ronaldo</td>
+                      <td>90</td>
+                      <td>$$$$$</td>
+                    </tr>
+                    <tr>
+                      <td>Ronaldo</td>
+                      <td>90</td>
+                      <td>$$$$$</td>
+                    </tr>
+                    <tr>
+                      <td>Ronaldo</td>
+                      <td>90</td>
+                      <td>$$$$$</td>
+                    </tr>
+                    <tr>
+                      <td>Ronaldo</td>
+                      <td>90</td>
+                      <td>$$$$$</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div><br><br>
+          <div class="card-deck">
+            <div class="card" ng-repeat="x in data" ng-if="$index > 7 && $index < 12">
+              <div class="card-header">LW</div>
+              <div class="card-body">
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th class="noTop">Name</th>
+                      <th class="noTop">Overall</th>
+                      <th class="noTop">Wage</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Ronaldo</td>
+                      <td>90</td>
+                      <td>$$$$$</td>
+                    </tr>
+                    <tr>
+                      <td>Ronaldo</td>
+                      <td>90</td>
+                      <td>$$$$$</td>
+                    </tr>
+                    <tr>
+                      <td>Ronaldo</td>
+                      <td>90</td>
+                      <td>$$$$$</td>
+                    </tr>
+                    <tr>
+                      <td>Ronaldo</td>
+                      <td>90</td>
+                      <td>$$$$$</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div><br><br>
+          <div class="card-deck">
+            <div class="card" ng-repeat="x in data" ng-if="$index > 11">
+              <div class="card-header">LW</div>
+              <div class="card-body">
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th class="noTop">Name</th>
+                      <th class="noTop">Overall</th>
+                      <th class="noTop">Wage</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Ronaldo</td>
+                      <td>90</td>
+                      <td>$$$$$</td>
+                    </tr>
+                    <tr>
+                      <td>Ronaldo</td>
+                      <td>90</td>
+                      <td>$$$$$</td>
+                    </tr>
+                    <tr>
+                      <td>Ronaldo</td>
+                      <td>90</td>
+                      <td>$$$$$</td>
+                    </tr>
+                    <tr>
+                      <td>Ronaldo</td>
+                      <td>90</td>
+                      <td>$$$$$</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
     </div>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
