@@ -85,7 +85,7 @@ function getQuery(by) {
 		       FROM country;'
 	} else {
 		console.error("Invalid criterion");
-		throw error;
+		throw new Error("Invalid criterion: " + by);
 	}
 
 	return sql;

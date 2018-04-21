@@ -21,7 +21,7 @@
     var app = angular.module('index',[]);
     app.controller('indexController', function($scope, $http) {
         $scope.show = 0;
-        var request = $http.get("getSimulation", {params: {numSimulations: 10000, randomness: 0, by: "normalElo"}}).then
+        var request = $http.get("getSimulation", {params: {numSimulations: 10000, randomness: 0, by: "nElo"}}).then
         (function successCallback(data) {
             $scope.data = data.data;
             $scope.show = 1;
