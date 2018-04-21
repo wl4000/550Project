@@ -119,33 +119,119 @@ function runSimulations(by, randomness, numSimulations, data) {
 	}
 	// Sort countryData by group
 	countryData = countryData.sort(function(j1, j2) { return j1.group.localeCompare(j2.group) });
-	
-	for (var i = 0; i < numSimulations; i++) {
+	// Create simulation data
+	var simData = createSimulationJSON(countryData);
 
-	}
+	for (var i = 0; i < numSimulations; i++) {
+		runSingleSimulation(by, randomness, simData);
+	}	
+	return simData;
 }
 
 // Run Single Simulation
-function runSingleSimulation(by, randomness, countryData) {
-	return "kek";
+function runSingleSimulation(by, randomness, simData) {
+
+	// Group Stage
+	var groups = ["A", "B", "C", "D", "E", "F", "G", "H"];
+	// Round Robin matches for each group
+	for (var i = 0; i < groups.length; i++) {
+		for (var j = 0; j < 3; j++) {
+			for (var k = j + 1; k < 4; k++) {
+				simulateMatch(by, randomness, simData[4 * i + j], simData[4 * i + k]);
+			}
+		}
+	}
+
+	// Group Results - Top 16
+	var bracket = new Array(16).fill("0");
+	for (var i = 0; i < groups.length; i++) {
+		groupTeams = simData.slice(4 * i, 4 * i + 4).sort(function(c1, c2) { return c2.gamesWon - c1.gamesWon });
+		bracket[i] = (i % 2 == 0) ? groupTeams[0] : groupTeams[1];
+		bracket[i].top16 += 1;
+		bracket[i + 8] = (i % 2 == 0) ? groupTeams[1] : groupTeams[0];
+		bracket[i + 8].top16 += 1;
+	}
+
+	// Bracket Matches
+	var rounds = ["top8", "top4", "top2", "titles"];
+	for (var i = 0; i < rounds.length; i++) {
+		var newBracket = [];
+		for (var j = 0; j < bracket.length / 2; j++) {
+			var matchResult = simulateMatch(by, randomness, bracket[2 * j], bracket[2 * j + 1]);
+			newBracket[j] = bracket[2 * j + matchResult];
+			newBracket[j][rounds[i]] += 1;
+		}
+		bracket = newBracket;
+	}
+}
+
+// Create Simulation JSON
+function createSimulationJSON(countryData) {
+	var simJSON = []
+	for (var i = 0; i < countryData.length; i++) {
+		simJSON[i] = {"country": countryData[i].country, "rating": countryData[i].rating, "group": countryData[i].group,
+					  "gamesWon": 0, "gamesPlayed": 0, "gamesLost": 0,
+					  "top16": 0, "top8": 0, "top4": 0, "top2": 0, "titles": 0};
+	}
+	return simJSON;
 }
 
 // Simulate Match
+// Updates JSON objects accordingly
+// Returns 0 if c1 wins, 1 otherwise
+// TODO: update
 function simulateMatch(by, randomness, c1, c2) {
-	return "kek";
+	c1.gamesPlayed += 1;
+	c2.gamesPlayed += 1;
+	var tempWinner = 0;
+	if (by == "nElo") {
+		// Elo rating formula
+		var eloDiff = c1.rating - c2.rating;
+		var winProb = 1.0 / (1 + Math.pow(10, -eloDiff / 400.0));
+		console.log(winProb);
+		var rand = Math.random();
+		tempWinner = (rand < winProb) ? 0 : 1;
+	} else {
+		// If tied, flip a coin
+		if (c1.rating == c2.rating) {
+			var rand = Math.random();
+			tempWinner = (rand < 0.5) ? 0 : 1;
+		// Otherwise, pick the team with the better rating
+		} else {
+			tempWinner = (c1.rating > c2.rating) ? 0 : 1;
+		}
+	}
+	// Adjust for randomness
+	var randomFactor = randomness / 100.0;
+	var rand = Math.random();
+	if (rand < randomFactor) {
+		var rand2 = Math.random();
+		if (rand2 < .5) {
+			winner = team1
+		} else {
+			winner = team 2
+		}
+	} else {
+		winner = tempWinner;
+	}
+	if (winner == 0) {
+		c1.gamesWon += 1;
+		return 0;
+	} else {
+		c2.gamesWon += 1;
+		return 1;
+	}
+	// c1.gamesPlayed += 1;
+	// c2.gamesPlayed += 1;
+	// if (c1.rating > c2.rating) {
+	// 	c1.gamesWon += 1;
+	// 	return 0;
+	// } else {
+	// 	c2.gamesWon += 1;
+	// 	return 1;
+	// }
 }
 
 /* NOTES
    - Fields to include: gamesWon, gamesPlayed, gamesLost, top16, top8, top4, top2, titles
 */
-
-// Add corresponding fields of list of JSONs
-function addJSON(l1, l2) {
-	if (l1.length != l2.length) {
-		console.error("JSON lists have unequal length");
-		return;
-	}
-	for (var i = 0; i < l1.length; i++) {
-		//TODO
-	}
-}
