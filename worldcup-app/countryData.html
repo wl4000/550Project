@@ -156,7 +156,9 @@
                   <th>Elo</th>
                   <th>GDP</th>
                   <th>GDP Per Capita</th>
+                  <th>World Cup Appearances</th>
                   <th>World Cup Wins</th>
+                  <th>Best Player Rating</th>
                 </tr>
               </thead>
               <tfoot>
@@ -166,17 +168,21 @@
                   <th>Elo</th>
                   <th>GDP</th>
                   <th>GDP Per Capita</th>
+                  <th>World Cup Appearances</th>
                   <th>World Cup Wins</th>
+                  <th>Best Player Rating</th>
                 </tr>
               </tfoot>
               <tbody>
                 <tr ng-repeat="x in data">
                   <td>{{x.country}}</td>
                   <td>{{x.team_group}}</td>
-                  <td>{{x.elo_rating}}</td>
+                  <td>{{x.elo}}</td>
                   <td>${{x.gdp}}</td>
                   <td>${{x.gdp_per_capita}}</td>
-                  <td>{{x.wins}} change this</td>
+                  <td>{{x.num_appearances}}</td>
+                  <td>{{x.wins}}</td>
+                  <td>{{x.player_max}}</td>
                 </tr>
               </tbody>
             </table>
