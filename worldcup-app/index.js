@@ -179,7 +179,6 @@ function getQuery(by) {
 	return sql;
 }
 
-// TODO
 // Run Simulations
 function runSimulations(by, randomness, numSimulations, data) {
 	// Create standardized countryData JSON object
@@ -208,12 +207,34 @@ function runSimulations(by, randomness, numSimulations, data) {
 
 	for (var i = 0; i < numSimulations; i++) {
 		runSingleSimulation(by, randomness, simData);
-	}	
-	return simData;
+	}
+
+	// Create result JSON
+	var simResult = {"groupAdvances": [], "countryData": simData};
+
+	// Populate simResult.groupAdvances
+	var groups = ["A", "B", "C", "D", "E", "F", "G", "H"];
+	for (var i = 0; i < groups.length; i++) {
+		var groupData = {"group": groups[i], "countries": []}
+		for (var j = 0; j < 4; j++) {
+			var countryJSON = simData[4 * i + j];
+			groupData.countries[j] = {"country": countryJSON.country, "rating": countryJSON.rating,
+			                          "advances": countryJSON.top16};
+		}
+		simResult.groupAdvances[i] = groupData;
+	}
+
+	return simResult;
 }
 
 // Run Single Simulation
 function runSingleSimulation(by, randomness, simData) {
+
+	// Reset gamesWon and gamesPlayed
+	for (var i = 0; i < simData.length; i++) {
+		simData[i].gamesWon = 0;
+		simData[i].gamesPlayed = 0;;
+	}
 
 	// Group Stage
 	var groups = ["A", "B", "C", "D", "E", "F", "G", "H"];
@@ -229,7 +250,11 @@ function runSingleSimulation(by, randomness, simData) {
 	// Group Results - Top 16
 	var bracket = new Array(16).fill("0");
 	for (var i = 0; i < groups.length; i++) {
-		groupTeams = simData.slice(4 * i, 4 * i + 4).sort(function(c1, c2) { return c2.gamesWon - c1.gamesWon });
+		var groupSlice = simData.slice(4 * i, 4 * i + 4);
+		// Shuffle the slice to break ties randomly
+		var groupSliceShuffled = shuffle(groupSlice);
+		// Sort by number of games won
+		var groupTeams = groupSliceShuffled.sort(function(c1, c2) { return c2.gamesWon - c1.gamesWon });
 		bracket[i] = (i % 2 == 0) ? groupTeams[0] : groupTeams[1];
 		bracket[i].top16 += 1;
 		bracket[i + 8] = (i % 2 == 0) ? groupTeams[1] : groupTeams[0];
@@ -254,7 +279,7 @@ function createSimulationJSON(countryData) {
 	var simJSON = []
 	for (var i = 0; i < countryData.length; i++) {
 		simJSON[i] = {"country": countryData[i].country, "rating": countryData[i].rating, "group": countryData[i].group,
-					  "gamesWon": 0, "gamesPlayed": 0, "gamesLost": 0,
+					  "totalGamesWon": 0, "totalGamesPlayed": 0, "gamesWon": 0, "gamesPlayed": 0,
 					  "top16": 0, "top8": 0, "top4": 0, "top2": 0, "titles": 0};
 	}
 	return simJSON;
@@ -263,16 +288,18 @@ function createSimulationJSON(countryData) {
 // Simulate Match
 // Updates JSON objects accordingly
 // Returns 0 if c1 wins, 1 otherwise
-// TODO: update
+// TODO: wrong kind of randomness?
 function simulateMatch(by, randomness, c1, c2) {
 	c1.gamesPlayed += 1;
+	c1.totalGamesPlayed += 1;
 	c2.gamesPlayed += 1;
+	c2.totalGamesPlayed += 1;
 	var tempWinner = 0;
 	if (by == "nElo") {
 		// Elo rating formula
 		var eloDiff = c1.rating - c2.rating;
 		var winProb = 1.0 / (1 + Math.pow(10, -eloDiff / 400.0));
-		console.log(winProb);
+		//console.log(winProb);
 		var rand = Math.random();
 		tempWinner = (rand < winProb) ? 0 : 1;
 	} else {
@@ -286,34 +313,44 @@ function simulateMatch(by, randomness, c1, c2) {
 		}
 	}
 	// Adjust for randomness
-	var randomFactor = randomness / 100.0;
+	var randomFactor = randomness / 200.0;
 	var rand = Math.random();
-	if (rand < randomFactor) {
-		var rand2 = Math.random();
-		if (rand2 < .5) {
-			winner = team1
-		} else {
-			winner = team 2
-		}
-	} else {
-		winner = tempWinner;
-	}
+	var winner = (rand < randomFactor) ? (1 - tempWinner) : tempWinner;
+
+	// var randomFactor = randomness / 100.0;
+	// var rand = Math.random();
+	// if (rand < randomFactor) {
+	// 	var rand2 = Math.random();
+	// 	if (rand2 < .5) {
+	// 		winner = team1
+	// 	} else {
+	// 		winner = team 2
+	// 	}
+	// } else {
+	// 	winner = tempWinner;
+	// }
+
 	if (winner == 0) {
 		c1.gamesWon += 1;
+		c1.totalGamesWon += 1;
 		return 0;
 	} else {
 		c2.gamesWon += 1;
+		c2.totalGamesWon += 1;
 		return 1;
 	}
-	// c1.gamesPlayed += 1;
-	// c2.gamesPlayed += 1;
-	// if (c1.rating > c2.rating) {
-	// 	c1.gamesWon += 1;
-	// 	return 0;
-	// } else {
-	// 	c2.gamesWon += 1;
-	// 	return 1;
-	// }
+}
+
+// Shuffle an array (Fisher-Yates algorithm)
+function shuffle(a) {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
+    return a;
 }
 
 /* NOTES
