@@ -93,13 +93,18 @@ app.get('/getCorrelation', function(request, response) {
     	criterion2query = "c.wins wins";
     } else {
     	criterion2query = "max(player.overall) player_max";
-    }
-	connection.query('select country.country country,' + criterion1query + ', ' + criterion2query + ' from country join player on player.nationality=country.country join (SELECT country, count(*)-1 AS wins FROM (SELECT country, team_group FROM country UNION ALL SELECT a.winner AS country, b.team_group AS team_group FROM world_cup_outcomes a JOIN country b ON a.winner=b.country) AS temp GROUP BY country, team_group) c on c.country=country.country left join (select count(*) num_appearances, country from participated_in group by country) d on d.country = country.country group by country;',
-	function (error, results, fields) {
-	  if (error) throw error;
-	  corr=runCorrelation(criterion1,criterion2,results);
-	  response.json({"correlation":corr});
-	});
+	}
+	if(criterion2query==criterion1query){
+		response.json({"correlation":1});
+	}
+	else{
+		connection.query('select country.country country,' + criterion1query + ', ' + criterion2query + ' from country join player on player.nationality=country.country join (SELECT country, count(*)-1 AS wins FROM (SELECT country, team_group FROM country UNION ALL SELECT a.winner AS country, b.team_group AS team_group FROM world_cup_outcomes a JOIN country b ON a.winner=b.country) AS temp GROUP BY country, team_group) c on c.country=country.country left join (select count(*) num_appearances, country from participated_in group by country) d on d.country = country.country group by country;',
+		function (error, results, fields) {
+	  		if (error) throw error;
+	  		corr=runCorrelation(criterion1,criterion2,results);
+	  		response.json({"correlation":corr});
+		});
+	}
 })
 // Run Simulations
 function runCorrelation(criterion1, criterion2, data) {
