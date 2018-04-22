@@ -60,37 +60,37 @@ app.get('/getCorrelation', function(request, response) {
     if (criterion1 == 1) {
     	criterion1 = "country.elo_rating";
     } else if (criterion1 == 2) {
-    	criterion1 = "country.gdp"
+    	criterion1 = "country.gdp";
     } else if (criterion1 == 3) {
-    	criterion1 = "country.gdp_per_capita"
+    	criterion1 = "country.gdp_per_capita";
     } else if (criterion1 == 4) {
-    	criterion1 = "country.interest_rate"
+    	criterion1 = "country.interest_rate";
     } else if (criterion1 == 5) {
-    	criterion1 = "country.unemployment_rate"
+    	criterion1 = "country.unemployment_rate";
     } else if (criterion1 == 6) {
-    	criterion1 = "d.num_appearances"
+    	criterion1 = "d.num_appearances";
     } else if (criterion1 == 7) {
-    	criterion1 = "c.wins"
+    	criterion1 = "c.wins";
     } else {
-    	"max(player.overall) player_max"
+    	"max(player.overall) player_max";
     }
     var criterion2 = request.query.criterion2;
     if (criterion2 == 1) {
     	criterion2 = "country.elo_rating";
     } else if (criterion2 == 2) {
-    	criterion2 = "country.gdp"
+    	criterion2 = "country.gdp";
     } else if (criterion2 == 3) {
-    	criterion2 = "country.gdp_per_capita"
+    	criterion2 = "country.gdp_per_capita";
     } else if (criterion2 == 4) {
-    	criterion2 = "country.interest_rate"
+    	criterion2 = "country.interest_rate";
     } else if (criterion2 == 5) {
-    	criterion2 = "country.unemployment_rate"
+    	criterion2 = "country.unemployment_rate";
     } else if (criterion2 == 6) {
-    	criterion2 = "IFNULL(d.num_appearances,0) num_appearances"
+    	criterion2 = "IFNULL(d.num_appearances,0) num_appearances";
     } else if (criterion2 == 7) {
-    	criterion2 = "c.wins"
+    	criterion2 = "c.wins";
     } else {
-    	"max(player.overall) player_max"
+    	"max(player.overall) player_max";
     }
 	connection.query('select country.country,' + criterion1 + ', ' + criterion2 + ' from country join player on player.nationality=country.country join (SELECT country, count(*)-1 AS wins FROM (SELECT country, team_group FROM country UNION ALL SELECT a.winner AS country, b.team_group AS team_group FROM world_cup_outcomes a JOIN country b ON a.winner=b.country) AS temp GROUP BY country, team_group) c on c.country=country.country left join (select count(*) num_appearances, country from participated_in group by country) d on d.country = country.country group by country;',
 	function (error, results, fields) {
@@ -98,6 +98,117 @@ app.get('/getCorrelation', function(request, response) {
 	  response.json(results);
 	});
 })
+// Run Simulations
+function runCorrelation(criterion1, criterion2, data) {
+	// Create standardized countryData JSON object
+	var x = [];
+	var y=[];
+	for (var i = 0; i < data.length; i++) {
+		country = data[i];
+		if (criterion1 == 1) {
+			x.push(country.elo_rating);
+			//criterion2 = "country.elo_rating";
+		} else if (criterion1 == 2) {
+			x.push(country.gdp);
+			//criterion2 = "country.gdp"
+		} else if (criterion1 == 3) {
+			x.push(country.gdp_per_capita);
+			//criterion2 = "country.gdp_per_capita"
+		} else if (criterion1 == 4) {
+			x.push(country.interest_rate);
+			//criterion2 = "country.interest_rate"
+		} else if (criterion1 == 5) {
+			x.push(country.unemployment_rate);
+			//criterion2 = "country.unemployment_rate"
+		} else if (criterion1 == 6) {
+			x.push(country.num_appearances);
+			//criterion2 = "IFNULL(d.num_appearances,0) num_appearances"
+		} else if (criterion1 == 7) {
+			x.push(country.c.wins);
+			//criterion2 = "c.wins"
+			//NOT SURE IF THIS WORKS
+		} else {
+			x.push(country.player_max);
+			//"max(player.overall) player_max"
+		}
+
+		if (criterion2 == 1) {
+			y.push(country.elo_rating);
+			//criterion2 = "country.elo_rating";
+		} else if (criterion2 == 2) {
+			y.push(country.gdp);
+			//criterion2 = "country.gdp"
+		} else if (criterion2 == 3) {
+			y.push(country.gdp_per_capita);
+			//criterion2 = "country.gdp_per_capita"
+		} else if (criterion2 == 4) {
+			y.push(country.interest_rate);
+			//criterion2 = "country.interest_rate"
+		} else if (criterion2 == 5) {
+			y.push(country.unemployment_rate);
+			//criterion2 = "country.unemployment_rate"
+		} else if (criterion2 == 6) {
+			y.push(country.num_appearances);
+			//criterion2 = "IFNULL(d.num_appearances,0) num_appearances"
+		} else if (criterion2 == 7) {
+			y.push(country.c.wins);
+			//criterion2 = "c.wins"
+			//NOT SURE IF THIS WORKS
+		} else {
+			y.push(country.player_max);
+			//"max(player.overall) player_max"
+		}
+	}
+
+	return getPearsonCorrelation(x,y);
+}
+
+// Library for javascript correlation function memory.psych.mun.ca/tech/js/correlation.shtml
+function getPearsonCorrelation(x, y) {
+    var shortestArrayLength = 0;
+     
+    if(x.length == y.length) {
+        shortestArrayLength = x.length;
+    } else if(x.length > y.length) {
+        shortestArrayLength = y.length;
+        console.error('x has more items in it, the last ' + (x.length - shortestArrayLength) + ' item(s) will be ignored');
+    } else {
+        shortestArrayLength = x.length;
+        console.error('y has more items in it, the last ' + (y.length - shortestArrayLength) + ' item(s) will be ignored');
+    }
+  
+    var xy = [];
+    var x2 = [];
+    var y2 = [];
+  
+    for(var i=0; i<shortestArrayLength; i++) {
+        xy.push(x[i] * y[i]);
+        x2.push(x[i] * x[i]);
+        y2.push(y[i] * y[i]);
+    }
+  
+    var sum_x = 0;
+    var sum_y = 0;
+    var sum_xy = 0;
+    var sum_x2 = 0;
+    var sum_y2 = 0;
+  
+    for(var i=0; i< shortestArrayLength; i++) {
+        sum_x += x[i];
+        sum_y += y[i];
+        sum_xy += xy[i];
+        sum_x2 += x2[i];
+        sum_y2 += y2[i];
+    }
+  
+    var step1 = (shortestArrayLength * sum_xy) - (sum_x * sum_y);
+    var step2 = (shortestArrayLength * sum_x2) - (sum_x * sum_x);
+    var step3 = (shortestArrayLength * sum_y2) - (sum_y * sum_y);
+    var step4 = Math.sqrt(step2 * step3);
+    var answer = step1 / step4;
+  
+	return answer;
+}
 
 app.get('/getDepthChart', function(request, response) {
 	var country = request.query.country;
