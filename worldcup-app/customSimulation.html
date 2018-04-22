@@ -206,7 +206,7 @@
                     <tr ng-repeat="y in x.countries">
                       <td class="teamLogo"><img src="asdf"></td>
                       <td>{{y.country}}</td>
-                      <td>{{y.rating}}</td>
+                      <td>{{y.rating | number : 2}}</td>
                       <td class="classForColorStyle">{{100 * y.advances / numSimulations | number : 2}}</td>
                     </tr>
                   </tbody>
@@ -231,7 +231,7 @@
                     <tr ng-repeat="y in x.countries">
                       <td class="teamLogo"><img src="asdf"></td>
                       <td>{{y.country}}</td>
-                      <td>{{y.rating}}</td>
+                      <td>{{y.rating | number : 2}}</td>
                       <td class="classForColorStyle">{{100 * y.advances / numSimulations | number : 2}}</td>
                   </tbody>
                 </table>
@@ -255,7 +255,7 @@
                     <tr ng-repeat="y in x.countries">
                       <td class="teamLogo"><img src="asdf"></td>
                       <td>{{y.country}}</td>
-                      <td>{{y.rating}}</td>
+                      <td>{{y.rating | number : 2}}</td>
                       <td class="classForColorStyle">{{100 * y.advances / numSimulations | number : 2}}</td>
                   </tbody>
                 </table>
@@ -293,7 +293,7 @@
                 <td><img src="asdf"></td>
                 <td>{{z.country}}</td>
                 <td>{{z.group}}</td>
-                <td>{{z.rating}}</td>
+                <td>{{z.rating | number : 2}}</td>
                 <td class="classForColorStyle">{{100 * z.top16 / numSimulations | number : 2}}</td>
                 <td class="classForColorStyle">{{100 * z.top8 / numSimulations | number : 2}}</td>
                 <td class="classForColorStyle">{{100 * z.top4 / numSimulations | number : 2}}</td>

@@ -103,66 +103,50 @@ app.get('/getCorrelation', function(request, response) {
 function runCorrelation(criterion1, criterion2, data) {
 	// Create standardized countryData JSON object
 	var x = [];
-	var y=[];
+	var y = [];
 	if(criterion1==criterion2){
 		return 1;
 	}
 	for (var i = 0; i < data.length; i++) {
-		country = data[i];
+		var country = data[i];
 		if (criterion1 == 1) {
-			x.push(elo);
-			//criterion2 = "country.elo_rating";
+			x.push(10);
 		} else if (criterion1 == 2) {
-			x.push(gdp);
-			//criterion2 = "country.gdp"
+			x.push(country.gdp);
 		} else if (criterion1 == 3) {
-			x.push(capita);
-			//criterion2 = "country.gdp_per_capita"
+			x.push(country.capita);
 		} else if (criterion1 == 4) {
-			x.push(interest_rate);
-			//criterion2 = "country.interest_rate"
+			x.push(country.interest_rate);
 		} else if (criterion1 == 5) {
-			x.push(unemployment_rate);
-			//criterion2 = "country.unemployment_rate"
-		} else if (criterion1 == 6) {
+			x.push(country.unemployment_rate);
+		} else if (country.criterion1 == 6) {
 			x.push(num_appearances);
-			//criterion2 = "IFNULL(d.num_appearances,0) num_appearances"
 		} else if (criterion1 == 7) {
-			x.push(wins);
-			//criterion2 = "c.wins"
-			//NOT SURE IF THIS WORKS
+			x.push(country.wins);
 		} else {
-			x.push(player_max);
-			//"max(player.overall) player_max"
+			x.push(country.player_max);
 		}
 
 		if (criterion2 == 1) {
-			y.push(elo);
-			//criterion2 = "country.elo_rating";
+			y.push(country.elo);
 		} else if (criterion2 == 2) {
-			y.push(gdp);
-			//criterion2 = "country.gdp"
+			y.push(country.gdp);
 		} else if (criterion2 == 3) {
-			y.push(capita);
-			//criterion2 = "country.gdp_per_capita"
+			y.push(country.capita);
 		} else if (criterion2 == 4) {
-			y.push(interest_rate);
-			//criterion2 = "country.interest_rate"
+			y.push(country.interest_rate);
 		} else if (criterion2 == 5) {
-			y.push(unemployment_rate);
-			//criterion2 = "country.unemployment_rate"
+			y.push(country.unemployment_rate);
 		} else if (criterion2 == 6) {
-			y.push(num_appearances);
-			//criterion2 = "IFNULL(d.num_appearances,0) num_appearances"
+			y.push(country.num_appearances);
 		} else if (criterion2 == 7) {
-			y.push(wins);
-			//criterion2 = "c.wins"
-			//NOT SURE IF THIS WORKS
+			y.push(country.wins);
 		} else {
-			y.push(player_max);
-			//"max(player.overall) player_max"
+			y.push(country.player_max);
 		}
 	}
+
+	console.log(x);
 
 	return getPearsonCorrelation(x,y);
 }

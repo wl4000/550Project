@@ -20,11 +20,19 @@
   <script type="text/javascript">
     var app = angular.module('index',[]);
     app.controller('indexController', function($scope, $http) {
+        var jq = $.noConflict();
         $scope.show = 0;
         var request = $http.get("getSimulation", {params: {numSimulations: 10000, randomness: 0, by: "nElo"}}).then
         (function successCallback(data) {
             $scope.data = data.data;
             $scope.show = 1;
+            function doColorThing() {
+              jq(".classForColorStyle").each(function() {
+                jq(this).css("background-color", getColor(jq(this).text()/100));
+                //console.log(getColor(jq(this).text()/100));
+              });
+            }
+            window.setTimeout(doColorThing,100);
         }, function errorCallback(data) {
             console.log('err');
         });
@@ -125,8 +133,8 @@
         </div>
         <div class="card-body">
           <div class="card-deck">
-            <div class="card" ng-repeat="x in data" ng-if="$index < 3">
-              <div class="card-header">{{ x.team_group }}</div>
+            <div class="card" ng-repeat="x in data.groupAdvances" ng-if="$index < 3">
+              <div class="card-header">{{ x.group }}</div>
               <div class="card-body">
                 <table class="table table-sm">
                   <thead>
@@ -138,39 +146,20 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    <tr ng-repeat="y in x.countries">
                       <td class="teamLogo"><img src="asdf"></td>
-                      <td>Egypt</td>
-                      <td>123</td>
-                      <td class="classForColorStyle">22</td>
-                    </tr>
-                    <tr>
-                      <td class="teamLogo"><img src="asdf"></td>
-                      <td>Russia</td>
-                      <td>124</td>
-                      <td class="classForColorStyle">33</td>
-                    </tr>
-                    <tr>
-                      <td class="teamLogo"><img src="asdf"></td>
-                      <td>Saudi Arabia</td>
-                      <td>345</td>
-                      <td class="classForColorStyle">100</td>
-                    </tr>
-                    <tr>
-                      <td class="teamLogo"><img src="asdf"></td>
-                      <td>Uruguay</td>
-                      <td>685</td>
-                      <td class="classForColorStyle">26</td>
+                      <td>{{y.country}}</td>
+                      <td>{{y.rating | number : 2}}</td>
+                      <td class="classForColorStyle">{{100 * y.advances / 10000 | number : 2}}</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
-          </div>
-          <br><br>
+          </div><br><br>
           <div class="card-deck">
-            <div class="card" ng-repeat="x in data" ng-if="$index > 2 && $index < 6">
-              <div class="card-header">{{ x.team_group }}</div>
+            <div class="card" ng-repeat="x in data.groupAdvances" ng-if="$index > 2 && $index < 6">
+              <div class="card-header">{{ x.group }}</div>
               <div class="card-body">
                 <table class="table table-sm">
                   <thead>
@@ -182,39 +171,19 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    <tr ng-repeat="y in x.countries">
                       <td class="teamLogo"><img src="asdf"></td>
-                      <td>Egypt</td>
-                      <td>123</td>
-                      <td class="classForColorStyle">22</td>
-                    </tr>
-                    <tr>
-                      <td class="teamLogo"><img src="asdf"></td>
-                      <td>Russia</td>
-                      <td>124</td>
-                      <td class="classForColorStyle">33</td>
-                    </tr>
-                    <tr>
-                      <td class="teamLogo"><img src="asdf"></td>
-                      <td>Saudi Arabia</td>
-                      <td>345</td>
-                      <td class="classForColorStyle">100</td>
-                    </tr>
-                    <tr>
-                      <td class="teamLogo"><img src="asdf"></td>
-                      <td>Uruguay</td>
-                      <td>685</td>
-                      <td class="classForColorStyle">26</td>
-                    </tr>
+                      <td>{{y.country}}</td>
+                      <td>{{y.rating | number : 2}}</td>
+                      <td class="classForColorStyle">{{100 * y.advances / 10000 | number : 2}}</td>
                   </tbody>
                 </table>
               </div>
             </div>
-          </div>
-          <br><br>
+          </div><br><br>
           <div class="card-deck">
-            <div class="card" ng-repeat="x in data" ng-if="$index > 5 && $index < 8">
-              <div class="card-header">{{ x.team_group }}</div>
+            <div class="card" ng-repeat="x in data.groupAdvances" ng-if="$index > 5">
+              <div class="card-header">{{ x.group }}</div>
               <div class="card-body">
                 <table class="table table-sm">
                   <thead>
@@ -226,30 +195,11 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    <tr ng-repeat="y in x.countries">
                       <td class="teamLogo"><img src="asdf"></td>
-                      <td>Egypt</td>
-                      <td>123</td>
-                      <td class="classForColorStyle">22</td>
-                    </tr>
-                    <tr>
-                      <td class="teamLogo"><img src="asdf"></td>
-                      <td>Russia</td>
-                      <td>124</td>
-                      <td class="classForColorStyle">33</td>
-                    </tr>
-                    <tr>
-                      <td class="teamLogo"><img src="asdf"></td>
-                      <td>Saudi Arabia</td>
-                      <td>345</td>
-                      <td class="classForColorStyle">100</td>
-                    </tr>
-                    <tr>
-                      <td class="teamLogo"><img src="asdf"></td>
-                      <td>Uruguay</td>
-                      <td>685</td>
-                      <td class="classForColorStyle">26</td>
-                    </tr>
+                      <td>{{y.country}}</td>
+                      <td>{{y.rating | number : 2}}</td>
+                      <td class="classForColorStyle">{{100 * y.advances / 10000 | number : 2}}</td>
                   </tbody>
                 </table>
               </div>
@@ -282,16 +232,16 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr ng-repeat="z in data.countryData">
                 <td><img src="asdf"></td>
-                <td>Russia</td>
-                <td>A</td>
-                <td>124</td>
-                <td class="classForColorStyle">33</td>
-                <td class="classForColorStyle">15</td>
-                <td class="classForColorStyle">6</td>
-                <td class="classForColorStyle">2</td>
-                <td class="classForColorStyle">1</td>
+                <td>{{z.country}}</td>
+                <td>{{z.group}}</td>
+                <td>{{z.rating | number : 2}}</td>
+                <td class="classForColorStyle">{{100 * z.top16 / 10000 | number : 2}}</td>
+                <td class="classForColorStyle">{{100 * z.top8 / 10000 | number : 2}}</td>
+                <td class="classForColorStyle">{{100 * z.top4 / 10000 | number : 2}}</td>
+                <td class="classForColorStyle">{{100 * z.top2 / 10000 | number : 2}}</td>
+                <td class="classForColorStyle">{{100 * z.titles / 10000 | number : 2}}</td>
             </tbody>
           </table>
         </div>
