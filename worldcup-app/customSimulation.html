@@ -42,10 +42,13 @@
               console.log(data.data)
               $scope.data = data.data;
               $scope.show = 1;
-              angular.forEach($scope.data, function(value, key) {
-                value.gdp = value.gdp.formatMoney(2,'.',',');
-                value.gdp_per_capita = value.gdp_per_capita.formatMoney(2,'.',',');
-              });
+              function doColorThing() {
+                jq(".classForColorStyle").each(function() {
+                  jq(this).css("background-color", getColor(jq(this).text()/100));
+                  //console.log(getColor(jq(this).text()/100));
+                });
+              }
+              window.setTimeout(doColorThing,100);
           }, function errorCallback(data) {
               console.log('err');
           });
@@ -187,8 +190,8 @@
         </div>
         <div class="card-body">
           <div class="card-deck">
-            <div class="card">
-              <div class="card-header">Group A</div>
+            <div class="card" ng-repeat="x in data.groupAdvances" ng-if="$index < 3">
+              <div class="card-header">{{ x.group }}</div>
               <div class="card-body">
                 <table class="table table-sm">
                   <thead>
@@ -200,30 +203,60 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    <tr ng-repeat="y in x.countries">
                       <td class="teamLogo"><img src="asdf"></td>
-                      <td>Egypt</td>
-                      <td>123</td>
-                      <td class="classForColorStyle">22</td>
+                      <td>{{y.country}}</td>
+                      <td>{{y.rating}}</td>
+                      <td class="classForColorStyle">{{100 * y.advances / numSimulations | number : 2}}</td>
                     </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div><br><br>
+          <div class="card-deck">
+            <div class="card" ng-repeat="x in data.groupAdvances" ng-if="$index > 2 && $index < 6">
+              <div class="card-header">{{ x.group }}</div>
+              <div class="card-body">
+                <table class="table table-sm">
+                  <thead>
                     <tr>
-                      <td class="teamLogo"><img src="asdf"></td>
-                      <td>Russia</td>
-                      <td>124</td>
-                      <td class="classForColorStyle">33</td>
+                      <th class="noTop"></th>
+                      <th class="noTop">Country</th>
+                      <th class="noTop">{{simBy}}</th>
+                      <th class="noTop" style="text-align: right;">Move On</th>
                     </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="y in x.countries">
+                      <td class="teamLogo"><img src="asdf"></td>
+                      <td>{{y.country}}</td>
+                      <td>{{y.rating}}</td>
+                      <td class="classForColorStyle">{{100 * y.advances / numSimulations | number : 2}}</td>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div><br><br>
+          <div class="card-deck">
+            <div class="card" ng-repeat="x in data.groupAdvances" ng-if="$index > 5">
+              <div class="card-header">{{ x.group }}</div>
+              <div class="card-body">
+                <table class="table table-sm">
+                  <thead>
                     <tr>
-                      <td class="teamLogo"><img src="asdf"></td>
-                      <td>Saudi Arabia</td>
-                      <td>345</td>
-                      <td class="classForColorStyle">100</td>
+                      <th class="noTop"></th>
+                      <th class="noTop">Country</th>
+                      <th class="noTop">{{simBy}}</th>
+                      <th class="noTop" style="text-align: right;">Move On</th>
                     </tr>
-                    <tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="y in x.countries">
                       <td class="teamLogo"><img src="asdf"></td>
-                      <td>Uruguay</td>
-                      <td>685</td>
-                      <td class="classForColorStyle">26</td>
-                    </tr>
+                      <td>{{y.country}}</td>
+                      <td>{{y.rating}}</td>
+                      <td class="classForColorStyle">{{100 * y.advances / numSimulations | number : 2}}</td>
                   </tbody>
                 </table>
               </div>
@@ -256,16 +289,16 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr ng-repeat="z in data.countryData">
                 <td><img src="asdf"></td>
-                <td>Russia</td>
-                <td>A</td>
-                <td>124</td>
-                <td class="classForColorStyle">33</td>
-                <td class="classForColorStyle">15</td>
-                <td class="classForColorStyle">6</td>
-                <td class="classForColorStyle">2</td>
-                <td class="classForColorStyle">1</td>
+                <td>{{z.country}}</td>
+                <td>{{z.group}}</td>
+                <td>{{z.rating}}</td>
+                <td class="classForColorStyle">{{100 * z.top16 / numSimulations | number : 2}}</td>
+                <td class="classForColorStyle">{{100 * z.top8 / numSimulations | number : 2}}</td>
+                <td class="classForColorStyle">{{100 * z.top4 / numSimulations | number : 2}}</td>
+                <td class="classForColorStyle">{{100 * z.top2 / numSimulations | number : 2}}</td>
+                <td class="classForColorStyle">{{100 * z.titles / numSimulations | number : 2}}</td>
             </tbody>
           </table>
         </div>
@@ -316,10 +349,12 @@
           var hue=Math.ceil(((value)*120).toString(10));
           return ["hsl(",hue,",100%,50%)"].join("");
       }
-      $(".classForColorStyle").each(function() {
-        $(this).css("background-color", getColor($(this).text()/100));
-        console.log(getColor($(this).text()/100));
-      });
+      function colorText() {
+        $(".classForColorStyle").each(function() {
+          $(this).css("background-color", getColor($(this).text()/100));
+          console.log(getColor($(this).text()/100));
+        });
+      }
     </script>
     <script type="text/javascript">
       // With JQuery

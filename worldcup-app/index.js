@@ -58,41 +58,41 @@ app.get('/getCountryData', function(request, response) {
 app.get('/getCorrelation', function(request, response) {
     var criterion1 = request.query.criterion1;
     if (criterion1 == 1) {
-    	criterion1 = "country.elo_rating";
+    	criterion1 = "country.elo_rating elo";
     } else if (criterion1 == 2) {
-    	criterion1 = "country.gdp";
+    	criterion1 = "country.gdp gdp";
     } else if (criterion1 == 3) {
-    	criterion1 = "country.gdp_per_capita";
+    	criterion1 = "country.gdp_per_capita capita";
     } else if (criterion1 == 4) {
-    	criterion1 = "country.interest_rate";
+    	criterion1 = "country.interest_rate interest_rate";
     } else if (criterion1 == 5) {
-    	criterion1 = "country.unemployment_rate";
+    	criterion1 = "country.unemployment_rate unemployment_rate";
     } else if (criterion1 == 6) {
-    	criterion1 = "d.num_appearances";
+    	criterion1 = "IFNULL(d.num_appearances,0) num_appearances";
     } else if (criterion1 == 7) {
-    	criterion1 = "c.wins";
+    	criterion1 = "c.wins wins";
     } else {
     	"max(player.overall) player_max";
     }
     var criterion2 = request.query.criterion2;
     if (criterion2 == 1) {
-    	criterion2 = "country.elo_rating";
+    	criterion2 = "country.elo_rating elo";
     } else if (criterion2 == 2) {
-    	criterion2 = "country.gdp";
+    	criterion2 = "country.gdp gdp";
     } else if (criterion2 == 3) {
-    	criterion2 = "country.gdp_per_capita";
+    	criterion2 = "country.gdp_per_capita capita";
     } else if (criterion2 == 4) {
-    	criterion2 = "country.interest_rate";
+    	criterion2 = "country.interest_rate interest_rate";
     } else if (criterion2 == 5) {
-    	criterion2 = "country.unemployment_rate";
+    	criterion2 = "country.unemployment_rate unemployment_rate";
     } else if (criterion2 == 6) {
     	criterion2 = "IFNULL(d.num_appearances,0) num_appearances";
     } else if (criterion2 == 7) {
-    	criterion2 = "c.wins";
+    	criterion2 = "c.wins wins";
     } else {
     	"max(player.overall) player_max";
     }
-	connection.query('select country.country,' + criterion1 + ', ' + criterion2 + ' from country join player on player.nationality=country.country join (SELECT country, count(*)-1 AS wins FROM (SELECT country, team_group FROM country UNION ALL SELECT a.winner AS country, b.team_group AS team_group FROM world_cup_outcomes a JOIN country b ON a.winner=b.country) AS temp GROUP BY country, team_group) c on c.country=country.country left join (select count(*) num_appearances, country from participated_in group by country) d on d.country = country.country group by country;',
+	connection.query('select country.country country,' + criterion1 + ', ' + criterion2 + ' from country join player on player.nationality=country.country join (SELECT country, count(*)-1 AS wins FROM (SELECT country, team_group FROM country UNION ALL SELECT a.winner AS country, b.team_group AS team_group FROM world_cup_outcomes a JOIN country b ON a.winner=b.country) AS temp GROUP BY country, team_group) c on c.country=country.country left join (select count(*) num_appearances, country from participated_in group by country) d on d.country = country.country group by country;',
 	function (error, results, fields) {
 	  if (error) throw error;
 	  response.json(results);
@@ -106,56 +106,56 @@ function runCorrelation(criterion1, criterion2, data) {
 	for (var i = 0; i < data.length; i++) {
 		country = data[i];
 		if (criterion1 == 1) {
-			x.push(country.elo_rating);
+			x.push(elo);
 			//criterion2 = "country.elo_rating";
 		} else if (criterion1 == 2) {
-			x.push(country.gdp);
+			x.push(.gdp);
 			//criterion2 = "country.gdp"
 		} else if (criterion1 == 3) {
-			x.push(country.gdp_per_capita);
+			x.push(capita);
 			//criterion2 = "country.gdp_per_capita"
 		} else if (criterion1 == 4) {
-			x.push(country.interest_rate);
+			x.push(interest_rate);
 			//criterion2 = "country.interest_rate"
 		} else if (criterion1 == 5) {
-			x.push(country.unemployment_rate);
+			x.push(unemployment_rate);
 			//criterion2 = "country.unemployment_rate"
 		} else if (criterion1 == 6) {
-			x.push(country.num_appearances);
+			x.push(num_appearances);
 			//criterion2 = "IFNULL(d.num_appearances,0) num_appearances"
 		} else if (criterion1 == 7) {
-			x.push(country.c.wins);
+			x.push(wins);
 			//criterion2 = "c.wins"
 			//NOT SURE IF THIS WORKS
 		} else {
-			x.push(country.player_max);
+			x.push(player_max);
 			//"max(player.overall) player_max"
 		}
 
 		if (criterion2 == 1) {
-			y.push(country.elo_rating);
+			y.push(elo);
 			//criterion2 = "country.elo_rating";
 		} else if (criterion2 == 2) {
-			y.push(country.gdp);
+			y.push(gdp);
 			//criterion2 = "country.gdp"
 		} else if (criterion2 == 3) {
-			y.push(country.gdp_per_capita);
+			y.push(capita);
 			//criterion2 = "country.gdp_per_capita"
 		} else if (criterion2 == 4) {
-			y.push(country.interest_rate);
+			y.push(interest_rate);
 			//criterion2 = "country.interest_rate"
 		} else if (criterion2 == 5) {
-			y.push(country.unemployment_rate);
+			y.push(unemployment_rate);
 			//criterion2 = "country.unemployment_rate"
 		} else if (criterion2 == 6) {
-			y.push(country.num_appearances);
+			y.push(num_appearances);
 			//criterion2 = "IFNULL(d.num_appearances,0) num_appearances"
 		} else if (criterion2 == 7) {
-			y.push(country.c.wins);
+			y.push(wins);
 			//criterion2 = "c.wins"
 			//NOT SURE IF THIS WORKS
 		} else {
-			y.push(country.player_max);
+			y.push(player_max);
 			//"max(player.overall) player_max"
 		}
 	}
