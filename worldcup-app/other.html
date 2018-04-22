@@ -42,9 +42,8 @@
           $scope.criterion2 = jq2("#secondCriterionCorr").val();
           var request = $http.get("getCorrelation", {params: {criterion1: $scope.criterion1, criterion2: $scope.criterion2}}).then
           (function successCallback(data) {
-              console.log(data.data)
-              $scope.data = data.data;
-              $scope.correlation = .78;
+              console.log(data.data);
+              $scope.correlation = data.data.correlation;
               $scope.showCorrelation = 1;
           }, function errorCallback(data) {
               console.log('err');
@@ -330,7 +329,7 @@
           </div>
           <button type="submit" ng-click="getCorrelation()" class="btn btn-primary">Submit</button>
         </div><br>
-        <h2 ng-show="showCorrelation">&nbsp Correlation: {{correlation}}</h2>
+        <h2 ng-show="showCorrelation">&nbsp Correlation: {{correlation | number:4}}</h2>
     </div>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
