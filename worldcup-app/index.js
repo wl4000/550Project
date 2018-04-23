@@ -73,7 +73,7 @@ app.get('/getCorrelation', function(request, response) {
     } else if (criterion1 == 7) {
     	criterion1query = "c.wins wins";
     } else {
-    	criterion2query = "max(player.overall) player_max";
+    	criterion1query = "max(player.overall) player_max";
     }
     var criterion2 = request.query.criterion2;
     var criterion2query = "";

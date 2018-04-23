@@ -39,7 +39,7 @@
           }
           var request = $http.get("getSimulation", {params: {numSimulations: $scope.numSimulations, randomness: $scope.randomness, by: $scope.by}}).then
           (function successCallback(data) {
-              console.log(data.data)
+              console.log(data.data);
               $scope.data = data.data;
               $scope.show = 1;
               function doColorThing() {
