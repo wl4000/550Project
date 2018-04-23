@@ -314,7 +314,7 @@ function runSimulations(by, randomness, numSimulations, data) {
 	}
 
 	// Create result JSON
-	var simResult = {"groupAdvances": [], "countryData": simData};
+	var simResult = {"groupAdvances": [], "countryData": []};
 
 	// Populate simResult.groupAdvances
 	var groups = ["A", "B", "C", "D", "E", "F", "G", "H"];
@@ -325,8 +325,28 @@ function runSimulations(by, randomness, numSimulations, data) {
 			groupData.countries[j] = {"country": countryJSON.country, "rating": countryJSON.rating,
 			                          "advances": countryJSON.top16};
 		}
+		groupData.countries = groupData.countries.sort(function(c1, c2) {
+			var result = (c1.advances != c2.advances) ? c2.advances - c1.advances
+					   : (c1.rating != c2.rating) ? c2.rating - c1.rating
+					                              : c1.country.localeCompare(c2.country);
+			return result;
+		});
 		simResult.groupAdvances[i] = groupData;
 	}
+
+	// Populate simResult.countryData
+	var sortedSimData = simData.sort(function(c1, c2) {
+		var result = (c1.titles != c2.titles) ? c2.titles - c1.titles
+				   : (c1.top2 != c2.top2) ? c2.top2 - c1.top2
+				   : (c1.top4 != c2.top4) ? c2.top4 - c1.top4
+				   : (c1.top8 != c2.top8) ? c2.top8 - c1.top8
+				   : (c1.top16 != c2.top16) ? c2.top16 - c1.top16
+				   : (c1.rating != c2.rating) ? c2.rating - c1.rating
+				   : (c1.group != c2.group) ? c1.group.localeCompare(c2.group)
+											: c1.country.localeCompare(c2.country);
+		return result;
+	});
+	simResult.countryData = sortedSimData;
 
 	return simResult;
 }
