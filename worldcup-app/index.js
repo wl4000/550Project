@@ -94,7 +94,7 @@ app.get('/getCorrelation', function(request, response) {
     } else {
     	criterion2query = "max(player.overall) player_max";
 	}
-	if(criterion2query==criterion1query){
+	if(criterion1==criterion2){
 		response.json({"correlation":1});
 	}
 	else{
