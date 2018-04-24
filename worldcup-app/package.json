@@ -9,6 +9,7 @@
   "dependencies": {
     "angular": "^1.6.9",
     "express": "^4.13.3",
+    "mongodb": "^3.0.7",
     "mysql": "^2.15.0"
   },
   "engines": {
