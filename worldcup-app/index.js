@@ -5,10 +5,10 @@ var mysql = require('mysql')
 var MongoClient = require('mongodb').MongoClient;
 var mongodb;
 
-var mongoURL = "mongodb://localhost:27017/";
+var mongoURL = "mongodb://cis550group4:joeyisbeta42069@ds135680.mlab.com:35680/cis550project";
 MongoClient.connect(mongoURL, function(err, db) {
     if (err) throw err;
-    mongodb = db.db("worldCupImages");
+    mongodb = db.db("cis550project");
 });
 
 var connection = mysql.createConnection({
