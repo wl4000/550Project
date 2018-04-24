@@ -29,6 +29,33 @@
               console.log(data.data)
               $scope.data = data.data;
               $scope.showDepthChart = 1;
+
+              // Get player_ids
+              player_ids = []
+              for (var position in data.data) {
+                  if (data.data.hasOwnProperty(position)) {
+                      for (var i = 0; i < data.data[position].length; i++) {
+                          player_ids.push(data.data[position][i].player_id);
+                      }
+                  }
+              }
+              console.log(player_ids);
+
+              // Get player photos
+              var photoRequest = $http.get("getDepthChartPhotos", {params: {country: $scope.country, player_ids: player_ids}}).then
+              (function successCallback(data) {
+                  console.log(data.data);
+                  // Make player photo map
+                  var photos = {};
+                  for (var i = 0; i < data.data.length; i++) {
+                      photos[data.data[i].players.player_id] = data.data[i].players.photo;
+                  }
+                  $scope.photos = photos;
+                  console.log($scope.photos);
+              }, function errorCallback(data) {
+                  console.log('err');
+              });
+
           }, function errorCallback(data) {
               console.log('err');
           });
@@ -71,6 +98,10 @@
   .teamLogo {
     height: 24px;
     width: 24px;
+  }
+  .playerPhoto {
+    height: 48px;
+    width: 48px;
   }
   .table thead .noBottom {
     border-bottom: none;
@@ -213,6 +244,7 @@
                       <th class="noTop">Name</th>
                       <th class="noTop">Overall</th>
                       <th class="noTop">Wage</th>
+                      <th class="noTop">Photo</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -220,6 +252,7 @@
                       <td>{{x.name}}</td>
                       <td>{{x.overall}}</td>
                       <td>${{x.wage}}</td>
+                      <td><img class="playerPhoto" ng-src="{{photos[x.player_id]}}"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -236,6 +269,7 @@
                       <th class="noTop">Name</th>
                       <th class="noTop">Overall</th>
                       <th class="noTop">Wage</th>
+                      <th class="noTop">Photo</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -243,6 +277,7 @@
                       <td>{{x.name}}</td>
                       <td>{{x.overall}}</td>
                       <td>${{x.wage}}</td>
+                      <td><img class="playerPhoto" ng-src="{{photos[x.player_id]}}"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -259,6 +294,7 @@
                       <th class="noTop">Name</th>
                       <th class="noTop">Overall</th>
                       <th class="noTop">Wage</th>
+                      <th class="noTop">Photo</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -266,6 +302,7 @@
                       <td>{{x.name}}</td>
                       <td>{{x.overall}}</td>
                       <td>${{x.wage}}</td>
+                      <td><img class="playerPhoto" ng-src="{{photos[x.player_id]}}"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -282,6 +319,7 @@
                       <th class="noTop">Name</th>
                       <th class="noTop">Overall</th>
                       <th class="noTop">Wage</th>
+                      <th class="noTop">Photo</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -289,6 +327,7 @@
                       <td>{{x.name}}</td>
                       <td>{{x.overall}}</td>
                       <td>${{x.wage}}</td>
+                      <td><img class="playerPhoto" ng-src="{{photos[x.player_id]}}"></td>
                     </tr>
                   </tbody>
                 </table>

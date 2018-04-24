@@ -62,6 +62,23 @@ app.get('/getCountryFlags', function(request, response) {
 	});
 })
 
+app.get('/getDepthChartPhotos', function(request, response) {
+	var player_ids = request.query.player_ids;
+	for (var i = 0; i < player_ids.length; i++) {
+		player_ids[i] = parseInt(player_ids[i]);
+	}
+	mongodb.collection("countryPlayers").aggregate([
+		{$match: {country: request.query.country}},
+		{$project: {_id: 0, players: 1}},
+		{$unwind: "$players"},
+		{$project: {"players.player_id": 1, "players.photo": 1}},
+		{$match: {"players.player_id": {$in: player_ids}}}
+	]).toArray(function(err, result) {
+		if (err) throw err;
+		response.json(result);
+	});
+})
+
 app.get('/getCountryData', function(request, response) {
 	connection.query('select country.country country, country.team_group team_group, country.elo_rating elo, country.gdp, country.gdp_per_capita, max(player.overall) player_max, c.wins, IFNULL(d.num_appearances,0) num_appearances from country join player on player.nationality=country.country join (SELECT country, count(*)-1 AS wins FROM (SELECT country, team_group FROM country UNION ALL SELECT a.winner AS country, b.team_group AS team_group FROM world_cup_outcomes a JOIN country b ON a.winner=b.country) AS temp GROUP BY country, team_group) c on c.country=country.country left join (select count(*) num_appearances, country from participated_in group by country) d on d.country = country.country group by country;',
 	function (error, results, fields) {
@@ -220,21 +237,21 @@ function getPearsonCorrelation(x, y) {
 
 app.get('/getDepthChart', function(request, response) {
 	var country = request.query.country;
-	connection.query('  SELECT position, name, overall, wage FROM\
-	(SELECT position, name, overall, wage,@player_rank := IF(@current_position = position, @player_rank + 1, 1)\
+	connection.query('  SELECT position, name, overall, wage, player_id FROM\
+	(SELECT position, name, overall, wage, player_id, @player_rank := IF(@current_position = position, @player_rank + 1, 1)\
 	AS player_rank,\
 	@current_position := position\
-	FROM (SELECT A.position as position, A.overall as overall, B.name as name, B.wage as wage \
+	FROM (SELECT A.position as position, A.overall as overall, B.name as name, B.wage as wage, B.player_id as player_id \
 	  FROM player_by_position A JOIN player B on A.player_id=B.player_id WHERE B.nationality LIKE "'+country+'")\
 	  tmp ORDER BY position, overall DESC) ranked WHERE player_rank <= 4;',
 	function (error, results, fields) {
 	  if (error) throw error;
 	});
-	connection.query('  SELECT position, name, overall, wage FROM\
-	(SELECT position, name, overall, wage,@player_rank := IF(@current_position = position, @player_rank + 1, 1)\
+	connection.query('  SELECT position, name, overall, wage, player_id FROM\
+	(SELECT position, name, overall, wage, player_id, @player_rank := IF(@current_position = position, @player_rank + 1, 1)\
 	AS player_rank,\
 	@current_position := position\
-	FROM (SELECT A.position as position, A.overall as overall, B.name as name, B.wage as wage \
+	FROM (SELECT A.position as position, A.overall as overall, B.name as name, B.wage as wage, B.player_id as player_id \
 	  FROM player_by_position A JOIN player B on A.player_id=B.player_id WHERE B.nationality LIKE "'+country+'")\
 	  tmp ORDER BY position, overall DESC) ranked WHERE player_rank <= 4 order by position, overall asc;',
 	function (error, results, fields) {
@@ -250,7 +267,8 @@ app.get('/getDepthChart', function(request, response) {
 	  	var data = {
 	  		name: results[i].name,
 	  		overall: results[i].overall,
-	  		wage: results[i].wage
+			wage: results[i].wage,
+			player_id: results[i].player_id
 	  	}
 	  	o[key].push(data);
 	  }
