@@ -2,13 +2,21 @@ var express = require('express')
 var app = express()
 var path = require('path')
 var mysql = require('mysql')
+var MongoClient = require('mongodb').MongoClient;
+var mongodb;
+
+var mongoURL = "mongodb://localhost:27017/";
+MongoClient.connect(mongoURL, function(err, db) {
+    if (err) throw err;
+    mongodb = db.db("worldCupImages");
+});
 
 var connection = mysql.createConnection({
 	  host     : 'cis550project.cei97a31mv1e.us-east-2.rds.amazonaws.com',
 	  user     : 'cis550group4',
 	  password : 'joeyisbeta42069',
 	  database : 'cis550project'
-	});
+});
 
 app.set('port', (process.env.PORT || 5000))
 app.use(express.static(__dirname + '/public'))
@@ -46,6 +54,13 @@ app.get('/getSimulation', function(request, response) {
 	});
 })
 // ----------------------------------------------------------------------------
+
+app.get('/getCountryFlags', function(request, response) {
+	mongodb.collection("countryFlags").find().toArray(function(err, result) {
+		if (err) throw err;
+		response.json(result);
+	});
+})
 
 app.get('/getCountryData', function(request, response) {
 	connection.query('select country.country country, country.team_group team_group, country.elo_rating elo, country.gdp, country.gdp_per_capita, max(player.overall) player_max, c.wins, IFNULL(d.num_appearances,0) num_appearances from country join player on player.nationality=country.country join (SELECT country, count(*)-1 AS wins FROM (SELECT country, team_group FROM country UNION ALL SELECT a.winner AS country, b.team_group AS team_group FROM world_cup_outcomes a JOIN country b ON a.winner=b.country) AS temp GROUP BY country, team_group) c on c.country=country.country left join (select count(*) num_appearances, country from participated_in group by country) d on d.country = country.country group by country;',

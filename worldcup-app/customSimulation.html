@@ -52,6 +52,17 @@
           }, function errorCallback(data) {
               console.log('err');
           });
+          var flagRequest = $http.get("getCountryFlags").then
+          (function successCallback(data) {
+              var flags = {};
+              for (var i = 0; i < data.data.length; i++) {
+                  flags[data.data[i].country] = data.data[i].flag;
+              }
+              console.log(flags);
+              $scope.flags = flags;
+          }, function errorCallback(data) {
+              console.log('err');
+          });
         }        
     });
 
@@ -204,7 +215,7 @@
                   </thead>
                   <tbody>
                     <tr ng-repeat="y in x.countries">
-                      <td class="teamLogo"><img src="asdf"></td>
+                      <td class="teamLogo"><img ng-src="{{flags[y.country]}}"></td>
                       <td>{{y.country}}</td>
                       <td>{{y.rating | number : 2}}</td>
                       <td class="classForColorStyle">{{100 * y.advances / numSimulations | number : 2}}</td>
@@ -229,7 +240,7 @@
                   </thead>
                   <tbody>
                     <tr ng-repeat="y in x.countries">
-                      <td class="teamLogo"><img src="asdf"></td>
+                      <td class="teamLogo"><img ng-src="{{flags[y.country]}}"></td>
                       <td>{{y.country}}</td>
                       <td>{{y.rating | number : 2}}</td>
                       <td class="classForColorStyle">{{100 * y.advances / numSimulations | number : 2}}</td>
@@ -253,7 +264,7 @@
                   </thead>
                   <tbody>
                     <tr ng-repeat="y in x.countries">
-                      <td class="teamLogo"><img src="asdf"></td>
+                      <td class="teamLogo"><img ng-src="{{flags[y.country]}}"></td>
                       <td>{{y.country}}</td>
                       <td>{{y.rating | number : 2}}</td>
                       <td class="classForColorStyle">{{100 * y.advances / numSimulations | number : 2}}</td>
@@ -290,7 +301,7 @@
             </thead>
             <tbody>
               <tr ng-repeat="z in data.countryData">
-                <td><img src="asdf"></td>
+                <td><img ng-src="{{flags[z.country]}}"></td>
                 <td>{{z.country}}</td>
                 <td>{{z.group}}</td>
                 <td>{{z.rating | number : 2}}</td>
