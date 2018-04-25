@@ -445,7 +445,6 @@ function createSimulationJSON(countryData) {
 // Simulate Match
 // Updates JSON objects accordingly
 // Returns 0 if c1 wins, 1 otherwise
-// TODO: wrong kind of randomness?
 function simulateMatch(by, randomness, c1, c2) {
 	c1.gamesPlayed += 1;
 	c1.totalGamesPlayed += 1;
@@ -474,19 +473,6 @@ function simulateMatch(by, randomness, c1, c2) {
 	var rand = Math.random();
 	var winner = (rand < randomFactor) ? (1 - tempWinner) : tempWinner;
 
-	// var randomFactor = randomness / 100.0;
-	// var rand = Math.random();
-	// if (rand < randomFactor) {
-	// 	var rand2 = Math.random();
-	// 	if (rand2 < .5) {
-	// 		winner = team1
-	// 	} else {
-	// 		winner = team 2
-	// 	}
-	// } else {
-	// 	winner = tempWinner;
-	// }
-
 	if (winner == 0) {
 		c1.gamesWon += 1;
 		c1.totalGamesWon += 1;
@@ -509,7 +495,3 @@ function shuffle(a) {
     }
     return a;
 }
-
-/* NOTES
-   - Fields to include: gamesWon, gamesPlayed, gamesLost, top16, top8, top4, top2, titles
-*/
